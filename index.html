@@ -1,0 +1,106 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matter Apocalypse</title>
+
+    <link rel="stylesheet" href="style/main.css">
+
+    <script src="js/break_eternity.js"></script>
+
+    <script src="js/tooltip.js"></script>
+
+    <script src="js/formulas.js"></script>
+    <script src="js/format.js"></script>
+    <script src="js/achievements.js"></script>
+    <script src="js/main.js"></script>
+
+    <script src="js/currencies.js"></script>
+    <script src="js/resets.js"></script>
+    <script src="js/upgrades.js"></script>
+
+    <script src="js/temp.js"></script>
+    <script src="js/calc.js"></script>
+
+    <script src="js/element.js"></script>
+
+    <script src="js/save.js"></script>
+    <script src="js/load.js"></script>
+</head>
+<body onload="loadGame()">
+    <input id="copy" style="position: absolute; top: 0; left: 0; user-select: all; visibility: hidden;">
+    <div id="tooltip-div"></div>
+    <div id="app">
+        <div style="min-height: 100px;">
+            <div>You have <h1 id="matter-amount">0</h1> matter. <span id="matter-gain">(+0/s)</span></div>
+            <div class="small-text" id="antimatter-amount"></div>
+        </div>
+        <div class="main-line"></div>
+        <div id="tabs"></div>
+
+        <div id="matter-tab">
+            <div id="upgrades-M-table" class="upgrades-table"></div>
+        </div><div id="unnatural-tab">
+            <div>
+                You have <h3 id="unnatural-amount">0</h3> unnatural matter. <span id="unnatural-gain">(+0/annihilation)</span>
+                <div class="small-text"><i>When antimatter exceeds your matter, annihilating it, you earn unnatural matter based on your best matter.</i></div>
+                <div class="small-text">You have <h4 id="unnatural-total">0</h4> total unnatural matter, which translates to a <h4 id="unnatural-boost">???</h4> multiplier for matter generation.</div>
+            </div>
+            <div id="upgrades-UM-table" class="upgrades-table"></div>
+            <div class="small-text" id="anti-unnaturalmatter-amount"></div>
+        </div><div id="exotic-tab">
+            <div>
+                You have <h3 id="exotic-amount">0</h3> exotic matter. <span id="exotic-gain">(+0/annihilation)</span>
+                <div class="small-text"><i>When natural matter exceeds your unnatural matter, annihilating it, you earn exotic matter based on your total unnatural matter.</i></div>
+                <div class="small-text">You have <h4 id="exotic-total">0</h4> total exotic matter, which translates to a <h4 id="exotic-boost1">???</h4> multiplier for all previous matter gains and a <h4 id="exotic-boost2">???</h4> multiplier for matter generation.</div>
+            </div>
+            <div id="upgrades-EM-table" class="upgrades-table"></div>
+            <div class="small-text" id="anti-exoticmatter-amount"></div>
+        </div><div id="dark-tab">
+            <div>
+                You have <h3 id="dark-amount">0</h3> dark matter. <span id="dark-gain">(+0/annihilation)</span>
+                <div class="small-text"><i>When corrupted matter exceeds your exotic matter, annihilating it, you earn dark matter based on your total exotic matter.</i></div>
+                <div class="small-text">You have <h4 id="dark-total">0</h4> total dark matter, which translates to a <h4 id="dark-boost1">???</h4> multiplier for all previous matter gains and a <h4 id="dark-boost2">???</h4> multiplier for unnatural matter gain.</div>
+            </div>
+        </div>
+
+        <div id="auto-tab">
+            <h2>Auto-Upgrades</h2>
+            <div id="auto-upgrades" class="table-center">
+                <!--
+                <div class="auto-div" id="auto-upgs-M-div">
+                    <h4>Matter Upgrades</h4>
+                    <div class="auto-upgs-grid" id="auto-upgs-M-grid">
+                        <button>M1</button><button>M2</button><button>M3</button><button>M4</button>
+                    </div>
+                </div>
+                -->
+            </div>
+        </div>
+        <div id="achs-tab">
+            <div class="small-text">You have <h4 id="ach-total">0</h4> total achievements, which translates to a <h4 id="ach-boost">???</h4> exponent for <b>M2</b>'s level to its effect.</div>
+            <div id="achievements"></div>
+        </div>
+        <div id="options-tab">
+            <h2>Main Options</h2>
+            <div class="table-center">
+                <button class="big-btn" onclick="save()">Save</button>
+                <button class="big-btn" onclick="export_copy()">Export via clipboard</button>
+                <button class="big-btn" onclick="exporty()">Export via file</button>
+                <button class="big-btn" onclick="importy()">Import via prompt</button>
+                <button class="big-btn" onclick="importy_file()">Import via file</button>
+                <button class="big-btn" onclick="wipeConfirm()" style="color: red; font-weight: bold;">WIPE!!!</button>
+            </div>
+            <h2>Notations</h2>
+            <div class="table-center" id="notations"></div>
+            <br><br>
+            Matter Apocalypse - made by <a href="https://github.com/MrRedShark77">MrRedShark77</a> in <a href="https://itch.io/jam/sigj-2024">SIGJ 2024</a>
+            <br><br>
+            Credits:<br>
+            <a href="https://github.com/Patashu/break_eternity.js/tree/master">break_eternity.js</a> by <a href="https://github.com/Patashu">Patashu</a><br>
+        </div>
+    </div>
+
+    <div id="notify"></div>
+</body>
+</html>
