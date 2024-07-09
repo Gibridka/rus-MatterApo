@@ -163,6 +163,7 @@ const TABS = [
             ["dark", ()=>player.dark.unl],
         ],
     },{
+        unl: ()=>hasUpgrade("UM3") || hasUpgrade("EM5"),
         name: "Automations",
 
         stab: "auto",
