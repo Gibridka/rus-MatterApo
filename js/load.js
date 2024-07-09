@@ -13,6 +13,7 @@ function loadGame(start=true, gotNaN=false) {
             loop()
 
             el("app").style.display = ""
+            updateTheme()
             
             autosave = setInterval(save, 60000, true)
             setInterval(loop, 1000/FPS)

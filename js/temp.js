@@ -3,6 +3,7 @@ var options = {
     notation: "mixed_sc",
     comma: 9,
     mixed_sc: 63,
+    theme: "normal",
 }
 
 function reloadTemp() {
@@ -77,4 +78,6 @@ function updateTemp() {
     options.notation = ['sc','st','mixed_sc','log'][player.options.notation]
     options.comma = [3,6,9,12,15][player.options.comma]
     options.mixed_sc = [33,63,303,3003][player.options.mixed_sc]
+
+    options.theme = ['normal','dark'][player.options.theme]
 }

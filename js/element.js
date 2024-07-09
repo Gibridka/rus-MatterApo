@@ -10,6 +10,10 @@ function updateHTML() {
     updateTabs()
 }
 
+function updateTheme() {
+    el('theme_css').href = options.theme != "normal" ? "style/"+options.theme+".css" : ""
+}
+
 const NOTATIONS_OPTIONS = [
     {
         get html() {
@@ -31,6 +35,16 @@ const NOTATIONS_OPTIONS = [
         },
         click() {
             player.options.mixed_sc = (player.options.mixed_sc + 1) % 4
+        },
+    },{
+        get html() {
+            return "Theme: " + ["Normal (Light)", "Dark"][player.options.theme]
+        },
+        click() {
+            player.options.theme = (player.options.theme + 1) % 2
+
+            options.theme = ['normal','dark'][player.options.theme]
+            updateTheme()
         },
     },
 ]

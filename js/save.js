@@ -42,6 +42,7 @@ function getPlayerData() {
             notation: 2,
             comma: 2,
             mixed_sc: 1,
+            theme: 0,
         },
 
         time_played: 0,
