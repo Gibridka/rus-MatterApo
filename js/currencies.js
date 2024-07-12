@@ -9,7 +9,9 @@ const CURRENCIES = {
         name: "matter",
     
         get gain() {
-            let x = E(hasUpgrade('M1') ? 1 : 0)
+            if (!hasUpgrade('M1')) return E(0)
+
+            let x = E(1)
 
             x = x.mul(upgradeEffect('M2')).mul(tmp.unnatural_boost).mul(tmp.exotic_boost[0]).mul(tmp.dark_boost[0])
 
