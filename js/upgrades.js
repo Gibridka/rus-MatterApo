@@ -23,7 +23,7 @@ const UPGRADES = {
         curr: "matter",
 
         get scaling() {
-            let x = Decimal.add(50,upgradeEffect("UM8",0))
+            let x = Decimal.add(10,upgradeEffect("UM8",0))
             return x
         },
 
@@ -45,6 +45,7 @@ const UPGRADES = {
         },
 
         effect(a) {
+            a = a.mul(upgradeEffect("M12"))
             let x = Decimal.pow(this.base,a.pow(this.pow))
             return x
         },
@@ -61,10 +62,17 @@ const UPGRADES = {
         },
         curr: "matter",
 
-        cost: a => a.scale(1e3,2,"P").pow_base(2).pow_base(100),
-        bulk: a => a.log(100).log(2).scale(1e3,2,"P",true).floor().add(1),
+        get scaling() {
+            let x = E(10)
+            if (hasUpgrade("UM9")) x = x.add(Decimal.div(upgradeEffect("UM8",0),2))
+            return x
+        },
+
+        cost(a) { return a.scale(this.scaling,2,"P").pow_base(2).pow_base(100) },
+        bulk(a) { return a.log(100).log(2).scale(this.scaling,2,"P",true).floor().add(1) },
 
         effect(a) {
+            a = a.mul(upgradeEffect("M12"))
             let x = a.root(2).mul(this.base)
             return x
         },
@@ -81,10 +89,11 @@ const UPGRADES = {
         },
         curr: "matter",
 
-        cost: a => a.sumBase(2).pow_base(1e9).mul(1e36),
-        bulk: a => a.div(1e36).log(1e9).sumBase(2,true).floor().add(1),
+        cost: a => a.sumBase(2).pow_base(1e10).mul(1e50),
+        bulk: a => a.div(1e50).log(1e10).sumBase(2,true).floor().add(1),
 
         effect(a) {
+            a = a.mul(upgradeEffect("M12"))
             let x = a.mul(this.base)
             return x
         },
@@ -97,7 +106,7 @@ const UPGRADES = {
         desc: `Matter boosts unnatural matter gain, but speeds time of antimatter growth at same rate.`,
         curr: "matter",
 
-        cost: 1e110,
+        cost: 1e150,
 
         effect(a) {
             let x = player.matter.add(1).slog(10).add(1)
@@ -109,19 +118,20 @@ const UPGRADES = {
     'M6': {
         unl: ()=>hasUpgrade('M5'),
 
-        get base() { return 0.1 },
+        get base() { return Decimal.mul(0.1,hasUpgrade("UM10")?getAchievementBoost():1) },
 
         get desc() {
             let base = this.base
-            return `Increase the base of <b>M3</b> & <b>M4</b> by <b>+${format(base)}</b> per ${hasUpgrade("UM6") ? "square" : "cube"}-rooted level.`
+            return `Increase the base of <b>M3</b> & <b>M4</b> by <b>+${format(base)}</b> per ${hasUpgrade("DM2") ? "" : hasUpgrade("UM6") ? "square-rooted" : "cube-rooted"} level.`
         },
         curr: "matter",
 
-        cost: a => a.sumBase(2).pow_base('e625').mul('e375'),
-        bulk: a => a.div('e375').log('e625').sumBase(2,true).floor().add(1),
+        cost: a => a.scale(1e4,2,"P",false,tmp.dark_penalty[1]).sumBase(2).pow_base('e800').mul('e400'),
+        bulk: a => a.div('e400').log('e800').sumBase(2,true).scale(1e4,2,"P",true,tmp.dark_penalty[1]).floor().add(1),
 
         effect(a) {
-            let x = a.root(hasUpgrade("UM6") ? 2 : 3).mul(this.base)
+            a = a.mul(upgradeEffect("M12"))
+            let x = a.root(hasUpgrade("DM2") ? 1.5 : hasUpgrade("UM6") ? 2 : 3).mul(this.base)
             return x
         },
         effDesc: x => "+"+format(x),
@@ -133,7 +143,7 @@ const UPGRADES = {
         desc: `Time of antimatter growth raises matter generation at a reduced rate.`,
         curr: "matter",
 
-        cost: E('e15000'),
+        cost: E('e5555'),
 
         effect(a) {
             let x = player.antimatter_time.add(1).log10().div(8).add(1)
@@ -150,7 +160,7 @@ const UPGRADES = {
         get desc() { return `<b>M5</b>'s effect is raised to the <b>${format(this.base)}th</b> power.` },
         curr: "matter",
 
-        cost: E('e60000'),
+        cost: E('e1.8e4'),
     },
     'M9': {
         max: 100,
@@ -168,6 +178,7 @@ const UPGRADES = {
         bulk: a => a.log(10).div(1e36).log(10).sumBase(1.1,true).floor().add(1),
 
         effect(a) {
+            a = a.mul(upgradeEffect("M12"))
             let x = a.mul(this.base)
             return x
         },
@@ -180,7 +191,38 @@ const UPGRADES = {
         desc: `The exponent of matter generation is raised to the <b>1.05th</b> power.`,
         curr: "matter",
 
-        cost: E('ee400'),
+        cost: E('ee200'),
+    },
+    'M11': {
+        unl: ()=>hasUpgrade('M10') && player.dark.unl,
+
+        desc: `Increase the exponent of matter generation by <b>^1.1</b> per level.`,
+        curr: "matter",
+
+        cost: a => a.sumBase(1.1).pow_base(1.5).mul(10000).pow_base(10).pow_base(10),
+        bulk: a => a.log(10).log(10).div(10000).log(1.5).sumBase(1.1,true).floor().add(1),
+
+        effect(a) {
+            a = a.mul(upgradeEffect("M12"))
+            let x = Decimal.pow(1.1,a)
+            return x
+        },
+        effDesc: x => formatPow(x),
+    },
+    'M12': {
+        unl: ()=>hasUpgrade('M11'),
+
+        desc: `All previous <b>M*</b> rebuyable upgrades are <b>+100%</b> stronger.`,
+        curr: "matter",
+
+        cost: a => a.sumBase(1.1).pow_base(1e3).mul(1e27).pow_base(10).pow_base(10),
+        bulk: a => a.log(10).log(10).div(1e27).log(1e3).sumBase(1.1,true).floor().add(1),
+
+        effect(a) {
+            let x = a.add(1)
+            return x
+        },
+        effDesc: x => formatMult(x),
     },
 
     "UM1": {
@@ -209,7 +251,7 @@ const UPGRADES = {
         desc: `Increase the exponent of the unnatural matter boost to matter generation based on your matter.`,
         curr: "unnatural",
 
-        cost: 50,
+        cost: 1e2,
 
         effect(a) {
             let x = player.matter.add(1).log10().add(1).log10().add(1).log10().mul(2)
@@ -234,7 +276,7 @@ const UPGRADES = {
         desc: `Increase the exponent of the unnatural matter boost to matter generation based on your total unnatural matter.`,
         curr: "unnatural",
 
-        cost: 5e3,
+        cost: 1e4,
 
         effect(a) {
             let x = player.unnatural.total.add(1).log10().div(3)
@@ -249,7 +291,7 @@ const UPGRADES = {
         desc: `Total unnatural matter boosts exotic matter gain, but speeds time of natural matter growth at same rate.`,
         curr: "unnatural",
 
-        cost: 1e10,
+        cost: 1e9,
 
         effect(a) {
             let x = player.unnatural.total.add(1).log(1e3).add(1)
@@ -261,7 +303,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade('UM5'),
 
-        desc: `Improve <b>M6</b>'s effect better.`,
+        desc: `Improve <b>M6</b>'s effect and achievement's boost better.`,
         curr: "unnatural",
 
         cost: 1e12,
@@ -277,8 +319,8 @@ const UPGRADES = {
         },
         curr: "unnatural",
 
-        cost: a => a.sumBase(1.1).pow_base(1e3).mul(1e30),
-        bulk: a => a.div(1e30).log(1e3).sumBase(1.1,true).floor().add(1),
+        cost: a => a.sumBase(1.1).pow_base(1e3).mul(1e27),
+        bulk: a => a.div(1e27).log(1e3).sumBase(1.1,true).floor().add(1),
 
         effect(a) {
             let x = Decimal.mul(this.base,a)
@@ -289,17 +331,35 @@ const UPGRADES = {
     "UM8": {
         unl: ()=>hasUpgrade('UM7'),
 
-        desc: `Delay the first scaling of <b>M2</b> by <b>+15</b> per level (normally 50).`,
+        desc: `Delay the first scaling of <b>M2</b> by <b>+10</b> per level (normally 10).`,
         curr: "unnatural",
 
-        cost: a => a.sumBase(1.1).pow_base(10).mul(1e42),
-        bulk: a => a.div(1e42).log(10).sumBase(1.1,true).floor().add(1),
+        cost: a => a.sumBase(1.1).pow_base(10).mul(1e40),
+        bulk: a => a.div(1e40).log(10).sumBase(1.1,true).floor().add(1),
 
         effect(a) {
-            let x = Decimal.mul(15,a)
+            let x = Decimal.mul(10,a)
             return x
         },
         effDesc: x => "+"+format(x,0),
+    },
+    "UM9": {
+        max: 1,
+        unl: ()=>hasUpgrade('UM8') && player.dark.unl,
+
+        desc: `<b>UM8</b> now affects <b>M3</b>'s scaling at a 50% rate.`,
+        curr: "unnatural",
+
+        cost: 1e130,
+    },
+    "UM10": {
+        max: 1,
+        unl: ()=>hasUpgrade('UM9'),
+
+        desc: `Achievement's boost now affects <b>M6</b>'s base.`,
+        curr: "unnatural",
+
+        cost: 1e270,
     },
 
     "EM1": {
@@ -314,10 +374,10 @@ const UPGRADES = {
     "EM2": {
         unl: ()=>hasUpgrade("EM1"),
 
-        get base() { return 2 },
+        get base() { return Decimal.add(2, upgradeEffect("EM8",0)) },
 
         get desc() {
-            return `Increase exotic matter gain by <b>${formatMult(this.base)}</b> on level.`
+            return `Increase exotic matter gain by <b>${formatMult(this.base)}</b> per level.`
         },
         curr: "exotic",
 
@@ -368,10 +428,126 @@ const UPGRADES = {
 
         cost: 1e9,
     },
+    "EM7": {
+        unl: ()=>hasUpgrade("EM6") && tmp.dark_penalty[1],
+
+        get base() { return 1 },
+
+        get desc() {
+            return `Delay the overflow of matter generation in the second dark penalty by <b>${formatMult(this.base)}</b> OoM^3 per level.`
+        },
+        curr: "exotic",
+
+        cost: a => a.sumBase(1.1).pow_base(2).mul(1e18),
+        bulk: a => a.div(1e18).log(2).sumBase(1.1,true).floor().add(1),
+
+        effect(a) {
+            let x = Decimal.mul(this.base,a)
+            return x
+        },
+        effDesc: x => "+"+format(x),
+    },
+    "EM8": {
+        unl: ()=>hasUpgrade('EM7'),
+
+        get base() { return 0.5 },
+
+        get desc() {
+            let base = this.base
+            return `Increase the base of <b>EM2</b> by <b>+${format(base)}</b> per level.`
+        },
+        curr: "exotic",
+
+        cost: a => a.sumBase(1.1).pow_base(1e3).mul(1e30),
+        bulk: a => a.div(1e30).log(1e3).sumBase(1.1,true).floor().add(1),
+
+        effect(a) {
+            let x = Decimal.mul(this.base,a)
+            return x
+        },
+        effDesc: x => "+"+format(x),
+    },
+
+    "DM1": {
+        max: 1,
+        unl: ()=>true,
+
+        desc: `Total unnatural matter provides an <b>exponential</b> boost to matter generation.`,
+        curr: "dark",
+
+        cost: 1,
+
+        effect(a) {
+            let x = expPow(CURRENCIES.unnatural.total.add(1),1.5)
+            return x
+        },
+        effDesc: x => formatPow(x),
+    },
+    "DM2": {
+        max: 1,
+        unl: ()=>hasUpgrade("DM1"),
+
+        desc: `Improve <b>M6</b>'s effect even better.`,
+        curr: "dark",
+
+        cost: 5,
+    },
+    "DM3": {
+        unl: ()=>hasUpgrade("DM2"),
+
+        get base() { return Decimal.add(2, 0) },
+
+        get desc() {
+            return `Increase dark matter gain by <b>${formatMult(this.base)}</b> on level.`
+        },
+        curr: "dark",
+
+        cost: a => a.sumBase(1.1).pow_base(10).mul(10),
+        bulk: a => a.div(10).log(10).sumBase(1.1,true).floor().add(1),
+
+        effect(a) {
+            let x = Decimal.pow(this.base,a)
+            return x
+        },
+        effDesc: x => formatMult(x),
+    },
+    "DM4": {
+        max: 1,
+        unl: ()=>hasUpgrade("DM3"),
+
+        desc: `The second boost of exotic matter now affects matter generation to the exponent. Exotic matter boosts are <b>squared</b> again.`,
+        curr: "dark",
+
+        cost: 250,
+    },
+    "DM5": {
+        max: 1,
+        unl: ()=>hasUpgrade("DM4"),
+
+        desc: `<span style="font-size: 0.9em;">Passively generate <b>10%</b> of exotic matter gained on unnatural matter annihilation at a rate affected by speed.
+        Natural and corrtured matter will no longer be growing, except for time.
+        However, this upgrade causes dark penalty.</span>`,
+        curr: "dark",
+
+        cost: 1e3,
+
+        on_buy() {
+            player.antimatter_time = E(0)
+        },
+    },
+    "DM6": {
+        max: 1,
+        unl: ()=>hasUpgrade("DM5"),
+
+        desc: `Automate <b>EM*</b> upgrades without spending currencies.`,
+        curr: "dark",
+
+        cost: 1e4,
+    },
 }
 
 const UPG_KEYS = Object.keys(UPGRADES)
-const PREFIXES = ["M",'UM','EM']
+const PREFIXES = ["M",'UM','EM',"DM"]
 
 function getUpgrades(prefix) { return UPG_KEYS.filter(key => key.split(prefix)[0] == "" && Number(key.split(prefix)[1])) }
 
@@ -385,6 +561,7 @@ const PREFIX_NAMES = {
     "M": "Matter",
     "UM": "Unnatural Matter",
     "EM": "Exotic Matter",
+    "DM": "Dark Matter",
 }
 
 function getUpgradeCost(id) {
@@ -432,6 +609,7 @@ function updateUpgradesTemp() {
 
     if (hasUpgrade("UM3")) auto.push(...PREFIX_TO_UPGS['M']);
     if (hasUpgrade("EM5")) auto.push(...PREFIX_TO_UPGS['UM']);
+    if (hasUpgrade("DM6")) auto.push(...PREFIX_TO_UPGS['EM']);
 
     tmp.auto_upg = auto
 

@@ -12,6 +12,8 @@ function reloadTemp() {
         upgs_effect: {},
 
         exotic_boost: [1,1],
+
+        dark_penalty: [],
     }
 }
 
@@ -29,6 +31,11 @@ function getExoticBoost() {
         y = y.pow(2)
     }
 
+    if (hasUpgrade("DM4")) {
+        x = x.pow(2)
+        y = y.pow(2)
+    }
+
     return [x,y]
 }
 
@@ -39,17 +46,21 @@ function getDarkBoost() {
 }
 
 function getAchievementBoost() {
-    let x = Decimal.pow(1.01, player.achievements.length)
+    let x = Decimal.pow(hasUpgrade("UM6") ? 1.125 : 1.01, player.achievements.length)
 
     return x
 }
 
 function getEM4Rate() {
-    return hasAchievement("ach26") ? 1 : 0.1
+    return hasAchievement("ach26") ? 0.5 : 0.1
+}
+
+function getDM5Rate() {
+    return 0.1
 }
 
 function antimatterGrowthSpeed() {
-    let x = simpleUpgradeEffect('M5',E(1))
+    let x = tmp.dark_penalty[2] ? E(1) : simpleUpgradeEffect('M5',E(1))
 
     if (hasAchievement('ach22')) x = x.mul(2)
 
@@ -65,6 +76,8 @@ function antiUnnaturalGrowthSpeed() {
 }
 
 function updateTemp() {
+    tmp.dark_penalty = DARK_PENALTY.map(x => x.unl())
+
     updateUpgradesTemp()
 
     tmp.unnatural_boost = getUnnaturalBoost()

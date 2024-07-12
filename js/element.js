@@ -5,7 +5,7 @@ function updateHTML() {
     el('matter-amount').innerHTML = format(player.matter,0)
     el('matter-gain').innerHTML = player.matter.formatGain(tmp.currency_gain.matter)
 
-    el('antimatter-amount').innerHTML = !hasUpgrade("EM4") && player.best_matter.gte(1e3) ? `Due to the large amount of matter, you have grown <h4>${format(getAntimatterGrowth().min(player.matter),0)}</h4> antimatter!` : ""
+    el('antimatter-amount').innerHTML = (tmp.dark_penalty[2] || !hasUpgrade("EM4")) && player.best_matter.gte(1e3) ? `Due to the large amount of matter, you have grown <h4>${format(getAntimatterGrowth().min(player.matter),0)}</h4> antimatter!` : ""
 
     updateTabs()
 }
@@ -86,4 +86,5 @@ function setupHTML() {
     setupNotations()
     setupAchievements()
     setupAutomations()
+    setupDarkPenalties()
 }

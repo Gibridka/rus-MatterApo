@@ -57,10 +57,10 @@ Decimal.prototype.softcap = function (start, power, mode, dis=false) {
     return x
 }
 
-Decimal.prototype.scale = function (s, p, mode, rev=false) {
+Decimal.prototype.scale = function (s, p, mode, rev=false, dis=false) {
     var x = this.clone()
 
-    if (Decimal.lte(x,s)) return x
+    if (dis || Decimal.lte(x,s)) return x
 
     switch (mode) {
         case 'L':

@@ -282,3 +282,41 @@ button.half-huge-btn {
     margin: 0px;
     cursor: pointer;
 }
+
+#dark-penalties {
+    display: grid;
+    grid-template-columns: repeat(3, 300px);
+    grid-auto-rows: 160px;
+    justify-content: center;
+    gap: 10px;
+    margin: 5px;
+}
+
+.dark-penalty {
+    border-radius: 20px;
+    padding: 5px;
+    background: linear-gradient(0deg, #080 0%, #404 40%, #404 60%, #800 100%);
+    box-shadow: 0px 0px 10px black;
+}
+.dark-penalty-base {
+    position: relative;
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(0deg, #040 0%, #202 25%, #202 75%, #400 100%);
+}
+
+.dark-penalty-base > div {
+    position: absolute;
+    left: 5px;
+    width: calc(100% - 10px);
+    color: white;
+    font-size: 12px;
+
+    &:nth-child(1) {
+        top: 5px;
+    };
+    &:nth-child(2) {
+        bottom: 5px;
+    };
+}

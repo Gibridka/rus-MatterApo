@@ -7,7 +7,7 @@ const RESETS = {
 
             unlockAchievement("ach12")
 
-            if (player.unnatural.total.gte(1e3)) {
+            if (player.unnatural.total.gte(1e4)) {
                 player.unnatural.anti_time = player.unnatural.anti_time.add(tmp.unnatural_speed)
 
                 if (getAntiUnnaturalGrowth().gte(player.unnatural.total)) {

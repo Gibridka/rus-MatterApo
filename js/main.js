@@ -12,7 +12,9 @@ function loop() {
 }
 
 function getAntimatterGrowth(t=player.antimatter_time) {
-    let x = Decimal.tetrate(1e3,t.root(2).div(5)).sub(1).max(0)
+    t = tmp.dark_penalty[2] ? t.div(10) : t.root(2).div(5)
+
+    let x = Decimal.tetrate(1e3,t).sub(1).max(0)
 
     return x
 }
@@ -20,7 +22,7 @@ function getAntimatterGrowth(t=player.antimatter_time) {
 function getAntiUnnaturalGrowth(offest=0) {
     let t = player.unnatural.anti_time.add(offest)
 
-    let x = Decimal.pow(1e3,t.div(10)).scale(1e30,3,"D")
+    let x = Decimal.pow(1e4,t.div(10)).scale(1e30,3,"D")
 
     return x.sub(1).max(0)
 }
@@ -50,7 +52,7 @@ const TAB_IDS = {
 
             el('unnatural-boost').innerHTML = formatMult(tmp.unnatural_boost)
 
-            el('anti-unnaturalmatter-amount').innerHTML = player.unnatural.total.gte(1e3)
+            el('anti-unnaturalmatter-amount').innerHTML = hasUpgrade("DM5") ? "" : player.unnatural.total.gte(1e4)
             ? `Due to the large amount of unnatural matter, you have grown <h4>${format(getAntiUnnaturalGrowth().min(player.unnatural.total),0)}</h4> natural matter!`
             + (hasUpgrade("EM4") ? "" : ` (<h4>${format(getAntiUnnaturalGrowth(tmp.unnatural_speed).min(player.unnatural.total.add(tmp.currency_gain.unnatural)),0)}</h4> on next matter annihilation)`)
             : ""
@@ -67,16 +69,16 @@ const TAB_IDS = {
             el('exotic-amount').innerHTML = format(player.exotic.matter,0)
             el('exotic-total').innerHTML = format(player.exotic.total,0)
 
-            el('exotic-gain').innerHTML = `(+${format(tmp.currency_gain.exotic,0)}/annihilation)`
-
             let effect = tmp.exotic_boost
 
             el('exotic-boost1').innerHTML = formatMult(effect[0]), el('exotic-boost2').innerHTML = formatPow(effect[1],3);
 
-            el('anti-exoticmatter-amount').innerHTML = player.exotic.total.gte(1e9)
+            el('anti-exoticmatter-amount').innerHTML = hasUpgrade("DM5") ? "" : player.exotic.total.gte(1e9)
             ? `Due to the large amount of exotic matter, you have grown <h4>${format(getAntiExoticGrowth().min(player.exotic.total),0)}</h4> corrupted matter!`
-            + (false ? "" : ` (<h4>${format(getAntiExoticGrowth(1).min(player.exotic.total.add(tmp.currency_gain.exotic)),0)}</h4> on next unnatural matter annihilation)`)
+            + (hasUpgrade("DM5") ? "" : ` (<h4>${format(getAntiExoticGrowth(1).min(player.exotic.total.add(tmp.currency_gain.exotic)),0)}</h4> on next unnatural matter annihilation)`)
             : ""
+
+            el('exotic-gain').innerHTML = hasUpgrade("DM5") ? formatGain(player.exotic.matter, tmp.currency_gain.exotic.mul(CURRENCIES.exotic.passive)) : `(+${format(tmp.currency_gain.exotic,0)}/annihilation)`
 
             updateUpgrades('EM')
         },
@@ -94,6 +96,8 @@ const TAB_IDS = {
 
             el('dark-boost1').innerHTML = formatMult(effect[0]), el('dark-boost2').innerHTML = formatPow(effect[1],3);
 
+            updateDarkPenalties()
+
             /*
             el('anti-exoticmatter-amount').innerHTML = player.exotic.total.gte(1e9)
             ? `Due to the large amount of exotic matter, you have grown <h4>${format(getAntiExoticGrowth().min(player.exotic.total),0)}</h4> corrupted matter!`
@@ -101,7 +105,7 @@ const TAB_IDS = {
             : ""
             */
 
-            // updateUpgrades('DM')
+            updateUpgrades('DM')
         },
     },
     "options": {
@@ -260,4 +264,65 @@ function addNotify(message,time=3) {
             notify.remove()
         },1000)
     },time*1000)
+}
+
+const DARK_PENALTY = [
+    {
+        unl: ()=>CURRENCIES.dark.total.gte(1),
+
+        get desc() {
+            return [
+                `Exotic matter's multiplier is reduced by <b>^0.6</b>.`,
+                `Improve unnatural matter gain even better.`
+            ]
+        },
+    },{
+        unl: ()=>CURRENCIES.dark.total.gte(100),
+
+        get desc() {
+            return [
+                `Matter generation slows down even more above <b>${format(tmp.matter_overflow_start)}</b>.`,
+                `Remove the scaling of <b>M6</b>.`
+            ]
+        },
+    },{
+        unl: ()=>hasUpgrade("DM5"),
+
+        get desc() {
+            return [
+                `Antimatter growth now reappears and is unaffected by <b>M5</b>. Matter annihilation forces exotic matter annihiliation for dark matter.`,
+                `The time of antimatter growth boosts dark matter gain slightly.`
+            ]
+        },
+    },
+]
+
+function setupDarkPenalties() {
+    let h = ""
+
+    for (let i in DARK_PENALTY) {
+        h += `
+        <div class="dark-penalty" id="dark-penalty-${i}">
+            <div class="dark-penalty-base" id="dark-penalty-${i}-base">
+                
+            </div>
+        </div>
+        `
+    }
+
+    el("dark-penalties").innerHTML = h
+}
+
+function updateDarkPenalties() {
+    let s = ["[-]","[+]"]
+
+    for (let i in DARK_PENALTY) {
+        let P = DARK_PENALTY[i]
+
+        let unl = P.unl()
+
+        el(`dark-penalty-${i}`).style.display = el_display(unl)
+
+        if (unl) el(`dark-penalty-${i}-base`).innerHTML = P.desc.map((x,i) => `<div><b>${s[i]}</b> ${x}</div>`).join("")
+    }
 }

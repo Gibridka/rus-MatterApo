@@ -7,17 +7,21 @@ function calc(dt) {
     if (player.best_matter.gte(1e3)) {
         player.antimatter_time = player.antimatter_time.add(Decimal.mul(dt,antimatterGrowthSpeed()))
 
-        if (!hasUpgrade("EM4") && getAntimatterGrowth().gte(player.matter)) {
-            doReset('unnatural',true)
+        if ((!hasUpgrade("EM4") || tmp.dark_penalty[2]) && getAntimatterGrowth().gte(player.matter)) {
+            doReset(tmp.dark_penalty[2] ? 'dark' : 'unnatural',true)
         }
     }
 
-    if (hasUpgrade("EM4") && player.unnatural.total.gte(1e3)) {
+    if (hasUpgrade("EM4") && player.unnatural.total.gte(1e4)) {
         player.unnatural.anti_time = player.unnatural.anti_time.add(Decimal.mul(dt*getEM4Rate(),tmp.unnatural_speed))
 
-        if (getAntiUnnaturalGrowth().gte(player.unnatural.total)) {
+        if (!hasUpgrade("DM5") && getAntiUnnaturalGrowth().gte(player.unnatural.total)) {
             doReset('exotic',true)
         }
+    }
+
+    if (hasUpgrade("DM5") && player.exotic.total.gte(1e9)) {
+        player.exotic.anti_time = player.exotic.anti_time.add(Decimal.mul(dt*getDM5Rate(),1))
     }
 
     let au = player.auto_upgs

@@ -28,6 +28,7 @@ const Achievements = {
         get desc() { return `Reach <b>${format('ee25')}</b> matter.` },
         check: () => player.matter.gte('ee25'),
     },
+
     'ach21': {
         title: `No more annihilation, but at what cost?`,
         get desc() { return `Purchase the <b>EM4</b> upgrade.` },
@@ -57,7 +58,29 @@ const Achievements = {
     'ach26': {
         title: `Ugh, I feel annihilation going to be useful`,
         get desc() { return `Annihilate exotic matter without buying the <b>EM4</b> upgrade.` },
-        get reward() { return `Keep the <b>EM4</b> upgrade on exotic matter annihilation, and it is <b>${formatMult(10)}</b> faster.` },
+        get reward() { return `Keep the <b>EM4</b> upgrade on exotic matter annihilation, and it is <b>${formatMult(5)}</b> faster.` },
+    },
+
+    'ach31': {
+        title: `I'm confused about penalty`,
+        get desc() { return `Fine <b>2nd</b> dark penalty.` },
+        check: () => tmp.dark_penalty[1],
+    },
+    'ach32': {
+        title: `NO MORE ANNOYING ANNIHILATION!`,
+        get desc() { return `Purchase the <b>DM5</b> upgrade.` },
+        check: () => hasUpgrade("DM5"),
+    },
+    'ach33': {
+        title: `Jacorbian-RedSharkian balancing in a nutshell III`,
+        get desc() { return `Reach <b>${format(1e100)}</b> total exotic matter.` },
+        check: () => player.exotic.total.gte(1e100),
+        get reward() { return `<b>^1.05</b> to exotic matter gain.` },
+    },
+    'ach34': {
+        title: `There's no point in end inflation`,
+        get desc() { return `Reach <b>${format('eee100')}</b> matter.` },
+        check: () => player.matter.gte('eee100'),
     },
 }
 
