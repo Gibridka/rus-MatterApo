@@ -18,7 +18,11 @@ function reloadTemp() {
 }
 
 function getUnnaturalBoost() {
-    let x = expPow(CURRENCIES.unnatural.total.add(1),Decimal.add(2, simpleUpgradeEffect("UM2",0)).add(simpleUpgradeEffect("UM4",0)))
+    let x = E(1)
+
+    x = expPow(CURRENCIES.unnatural.total.add(1),Decimal.add(2, simpleUpgradeEffect("UM2",0)).add(simpleUpgradeEffect("UM4",0)))
+
+    if (hasUpgrade("UM11")) x = Decimal.tetrate(10, x.max(1).slog(10).add(1))
 
     return x
 }
@@ -62,7 +66,8 @@ function getDM5Rate() {
 function antimatterGrowthSpeed() {
     let x = tmp.dark_penalty[2] ? E(1) : simpleUpgradeEffect('M5',E(1))
 
-    if (hasAchievement('ach22')) x = x.mul(2)
+    if (hasAchievement('ach22')) x = x.mul(2);
+    if (hasAchievement('ach35')) x = x.mul(1e2);
 
     return x
 }

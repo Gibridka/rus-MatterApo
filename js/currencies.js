@@ -26,11 +26,17 @@ const CURRENCIES = {
 
             x = expPow(x,upgradeEffect("M11"))
 
+           x = x.addTP(upgradeEffect("DM8",0))
+
             let ss = Decimal.iteratedexp(10,3,Decimal.add(10,upgradeEffect("EM7",0)))
 
             tmp.matter_overflow_start = ss
 
             x = x.overflow(ss,0.75,2)
+
+            if (x.gte("10 TP 1")) {
+                x = Decimal.tetrate(10, x.slog(10).div(10).root(2).mul(10))
+            }
 
             return x
         },
@@ -51,14 +57,14 @@ const CURRENCIES = {
             let exp = hasUpgrade("EM3") ? 2 : 1
             
             let x = base.pow(exp).sub(1).pow_base(10)
-
             if (tmp.dark_penalty[0]) x = Decimal.tetrate(10,base.root(2).sub(1)).pow(exp).sub(1).pow_base(10).add(x)
 
             x = x.mul(simpleUpgradeEffect('M5')).mul(upgradeEffect('UM1')).mul(tmp.exotic_boost[0]).mul(tmp.dark_boost[0])
 
             if (hasAchievement('ach24')) x = x.pow(1.05);
-
             x = x.pow(tmp.dark_boost[1])
+
+            x = expPow(x,upgradeEffect("UM12"));
 
             return x.floor()
         },
@@ -77,11 +83,21 @@ const CURRENCIES = {
         get gain() {
             if (player.unnatural.total.lt(1e4)) return E(0)
 
-            let x = expPow(player.unnatural.total.div(1e4),0.5).mul(simpleUpgradeEffect('UM5')).mul(upgradeEffect('EM2')).mul(tmp.dark_boost[0])
+            let x = expPow(player.unnatural.total.div(1e4),0.5)
+            
+            if (x.gte(1e100)) {
+                x = x.log10().div(100).log10().add(1).sqrt().log10().add(1).sqrt().mul(100).pow_base(10)
+            }
+            
+            x = x.mul(simpleUpgradeEffect('UM5')).mul(upgradeEffect('EM2')).mul(tmp.dark_boost[0])
 
             if (tmp.dark_penalty[0]) x = x.pow(0.6);
 
             if (hasAchievement('ach33')) x = x.pow(1.05);
+
+            if (x.gte('e1000')) {
+                x = Decimal.pow(10, x.log10().div(1e3).slog(10).add(1).mul(1e3))
+            }
 
             return x.floor()
         },

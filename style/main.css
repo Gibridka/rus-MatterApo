@@ -285,7 +285,7 @@ button.half-huge-btn {
 
 #dark-penalties {
     display: grid;
-    grid-template-columns: repeat(3, 300px);
+    grid-template-columns: repeat(2, 300px);
     grid-auto-rows: 160px;
     justify-content: center;
     gap: 10px;
@@ -312,11 +312,19 @@ button.half-huge-btn {
     width: calc(100% - 10px);
     color: white;
     font-size: 12px;
+}
 
-    &:nth-child(1) {
-        top: 5px;
-    };
-    &:nth-child(2) {
-        bottom: 5px;
-    };
+.dark-penalty-base > div:nth-child(1) {
+    top: 5px;
+}
+.dark-penalty-base > div:nth-child(2) {
+    bottom: 5px;
+}
+
+#upg-DM9-div {
+    grid-area: 3 / 1 / 4 / 5;
+}
+
+img {
+    vertical-align: middle;
 }

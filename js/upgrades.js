@@ -361,6 +361,30 @@ const UPGRADES = {
 
         cost: 1e270,
     },
+    "UM11": {
+        max: 1,
+        unl: ()=>hasUpgrade('UM10'),
+
+        desc: `Total unnatural matter boost is improved tetrationally.`,
+        curr: "unnatural",
+
+        cost: E('e3750'),
+    },
+    "UM12": {
+        unl: ()=>hasUpgrade('UM11'),
+
+        desc: `<b>Square</b> the exponent of unnatural matter per level.`,
+        curr: "unnatural",
+
+        cost: a => a.sumBase(1.1).pow_base(3).mul(150).pow_base(10).pow_base(10),
+        bulk: a => a.log(10).log(10).div(150).log(3).sumBase(1.1,true).floor().add(1),
+
+        effect(a) {
+            let x = Decimal.pow(2,a)
+            return x
+        },
+        effDesc: x => formatPow(x,0),
+    },
 
     "EM1": {
         max: 1,
@@ -443,6 +467,7 @@ const UPGRADES = {
 
         effect(a) {
             let x = Decimal.mul(this.base,a)
+            if (hasUpgrade("DM7")) x = x.sqr();
             return x
         },
         effDesc: x => "+"+format(x),
@@ -525,7 +550,7 @@ const UPGRADES = {
         unl: ()=>hasUpgrade("DM4"),
 
         desc: `<span style="font-size: 0.9em;">Passively generate <b>10%</b> of exotic matter gained on unnatural matter annihilation at a rate affected by speed.
-        Natural and corrtured matter will no longer be growing, except for time.
+        Natural and corrupted matter will no longer be growing, except for time.
         However, this upgrade causes dark penalty.</span>`,
         curr: "dark",
 
@@ -543,6 +568,40 @@ const UPGRADES = {
         curr: "dark",
 
         cost: 1e4,
+    },
+    "DM7": {
+        max: 1,
+        unl: ()=>hasUpgrade("DM6"),
+
+        desc: `The <b>EM7</b>'s effect is <b>squared</b>.`,
+        curr: "dark",
+
+        cost: 1e5,
+    },
+    "DM8": {
+        max: 54,
+        unl: ()=>hasUpgrade("DM7"),
+
+        desc: `The tower of matter generation (10^^n) is boosted by <b>+1</b> per squared level.`,
+        curr: "dark",
+
+        cost: a => a.pow_base(9).mul(1e12),
+        bulk: a => a.div(1e12).log(9).floor().add(1),
+
+        effect(a) {
+            let x = a.pow(2)
+            return x
+        },
+        effDesc: x => "+"+format(x),
+    },
+    "DM9": {
+        max: 1,
+        unl: ()=>hasUpgrade("DM8"),
+
+        get desc() { return `Enter the <b>???????????</b>. [NYI]` },
+        curr: "dark",
+
+        cost: EINF,// 1e63,
     },
 }
 

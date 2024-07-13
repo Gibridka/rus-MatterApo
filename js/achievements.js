@@ -82,6 +82,17 @@ const Achievements = {
         get desc() { return `Reach <b>${format('eee100')}</b> matter.` },
         check: () => player.matter.gte('eee100'),
     },
+    'ach35': {
+        title: `<img src="style/bart.png">`,
+        get desc() { return `Purchase the <b>DM8</b> upgrade.` },
+        check: () => hasUpgrade("DM8"),
+        get reward() { return `Multiply the time speed of antimatter growth by <b>100</b>. Why are you looking this?` },
+    },
+    'ach36': {
+        title: `You win, but at what cost?`,
+        get desc() { return `Reach <b>${format("175 PT 5.741225")}</b> matter.` },
+        check: () => player.matter.gte("175 PT 5.741225"),
+    },
 }
 
 function updateAchievements() {

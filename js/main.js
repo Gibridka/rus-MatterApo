@@ -294,6 +294,15 @@ const DARK_PENALTY = [
                 `The time of antimatter growth boosts dark matter gain slightly.`
             ]
         },
+    },{
+        unl: ()=>hasUpgrade("DM7"),
+
+        get desc() {
+            return [
+                `The base of exotic matter (from unnatural matter) slows down even more above <b>${format(1e100)}</b> and again.`,
+                `Unlock final upgrades.`
+            ]
+        },
     },
 ]
 
