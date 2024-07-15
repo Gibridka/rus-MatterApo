@@ -227,16 +227,7 @@ const FORMATS = {
             ex = E(ex)
             let e = ex.log10().floor()
             if (e.lt(options.mixed_sc) && e.gte(max)) return format(ex,acc,max,"st")
-            else {
-                if (ex.gte("eeee10")) {
-                    let slog = ex.slog()
-                    return (slog.gte(1e9)?'':E(10).pow(slog.sub(slog.floor())).toFixed(4)) + "F" + format(slog.floor(),0,max)
-                }
-                let ee = e.log10().floor(), f = Decimal.sub(5, ee).max(0).min(2).toNumber()
-                let m = ex.div(E(10).pow(e)).min(10-10**-f)
-                let be = ee.gte(6)
-                return e.gte(1e3) ? (be?"":m.toFixed(f))+"e"+this.format(e,0,max) : format(ex,acc,max,"sc")
-            }
+            else return format(ex, acc, max, "sc")
         }
     },
     layer: {
@@ -329,7 +320,9 @@ function format(ex, acc=2, max=options.comma, type=options.notation) {
             } else {
                 if (ex.gte("eeee10")) {
                     let slog = ex.slog()
-                    return neg+(slog.gte(1e9)?'':E(10).pow(slog.sub(slog.floor())).toFixed(4)) + "F" + format(slog.floor(), 0)
+                    slog = slog.floor()
+                    return neg+(slog.gte(1e9)?'10^^'+format(slog,0):"e"+`<sup>${format(slog,0)}</sup>`+Decimal.iteratedlog(ex,10,slog).toFixed(4))
+                    // return neg+(slog.gte(1e9)?'':E(10).pow(slog.sub(slog.floor())).toFixed(4)) + "F" + format(slog.floor(), 0)
                 }
                 let ee = e.log10().floor(), f = Decimal.sub(5, ee).max(0).min(2).toNumber()
                 let m = ex.div(E(10).pow(e)).min(10-10**-f)

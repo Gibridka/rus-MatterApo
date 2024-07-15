@@ -85,6 +85,8 @@ function updateTemp() {
 
     updateUpgradesTemp()
 
+    updateMetaMatterTemp()
+
     tmp.unnatural_boost = getUnnaturalBoost()
     tmp.exotic_boost = getExoticBoost()
     tmp.dark_boost = getDarkBoost()

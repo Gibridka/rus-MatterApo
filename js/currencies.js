@@ -125,6 +125,28 @@ const CURRENCIES = {
 
         passive: 0,
     },
+    meta: {
+        get amount() { return player.meta.matter },
+        set amount(v) { player.meta.matter = v.max(0) },
+
+        get best() { return player.meta.best },
+        set best(v) { player.meta.best = v.max(0) },
+
+        name: "meta-matter",
+
+        get gain() {
+            if (!hasUpgrade("MM1")) return E(0)
+
+            let x = E(0.1)
+
+            if (hasUpgrade("MM2")) x = x.add(this.amount.mul(UPGRADES["MM2"].base));
+            if (hasAchievement("ach42")) x = x.mul(10);
+
+            x = x.addTP(upgradeEffect("MM6",0))
+
+            return x.min("1e308 TP 1")
+        },
+    },
 }
 
 function setupCurrencies() {

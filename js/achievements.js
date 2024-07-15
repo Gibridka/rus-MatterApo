@@ -93,11 +93,49 @@ const Achievements = {
         get desc() { return `Reach <b>${format("175 PT 5.741225")}</b> matter.` },
         check: () => player.matter.gte("175 PT 5.741225"),
     },
+
+    'ach41': {
+        title: `"Bro it's canon event"`,
+        get desc() { return `Enter the <b>Matterverse</b>.` },
+        check: () => player.meta.unl,
+    },
+    'ach42': {
+        title: `INFINITY ANNIHILATION???`,
+        get desc() { return `Reach <b>${format(Number.MAX_VALUE)}</b> meta-matter (<b>${META_MATTER.formatFull(Number.MAX_VALUE)}</b>).` },
+        check: () => player.meta.matter.gte(Number.MAX_VALUE),
+        get reward() { return `Multiply meta-matter generation by <b>10</b>.` },
+    },
+    'ach43': {
+        title: `Time is relative to annihilation`,
+        b: Decimal.tetrate(Number.MAX_VALUE,2),
+        get desc() { return `Reach <b>${format(this.b)}</b> meta-matter (<b>${META_MATTER.formatFull(this.b)}</b>).` },
+        check() { return player.meta.matter.gte(this.b) },
+    },
+    'ach44': {
+        title: `Tetration begins to harm!`,
+        get desc() { return `Purchase the <b>O6</b> upgrade.` },
+        check: () => hasUpgrade("O6"),
+        get reward() { return `Achievement boost now affects the exponent of <b>MM6</b>'s level to its effect.` },
+    },
+    'ach45': {
+        title: `Is there meta-meta-matter soon?`,
+        b: Decimal.tetrate(Number.MAX_VALUE,1e100),
+        get desc() { return `Reach <b>${format(this.b)}</b> meta-matter (<b>${META_MATTER.formatFull(this.b)}</b>).` },
+        check() { return player.meta.matter.gte(this.b) },
+    },
+    'ach46': {
+        title: `The master of annihilation`,
+        get desc() { return `Beat the game.` },
+    },
 }
 
 function updateAchievements() {
     for (let [id, v] of Object.entries(Achievements)) {
-        let ach = el(id+"-div")
+        let n = parseInt(id.split("ach")[1])
+
+        let ach = el(id+"-div"), unl = player.meta.unl || n < 41
+
+        ach.style.visibility = unl ? "" : "hidden"
 
         let h = `<b class="ach-title">${v.title}</b><br class='line'>${v.desc}`
 

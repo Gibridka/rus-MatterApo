@@ -2,10 +2,12 @@ function el_display(bool) { return bool ? "" : "none" }
 function el_classes(data) { return Object.keys(data).filter(x => data[x]).join(" ") }
 
 function updateHTML() {
-    el('matter-amount').innerHTML = format(player.matter,0)
-    el('matter-gain').innerHTML = player.matter.formatGain(tmp.currency_gain.matter)
+    el('matter-amount').innerHTML = player.meta.unl ? format(player.meta.matter) : format(player.matter,0)
+    el('matter-gain').innerHTML = player.meta.unl ? player.meta.matter.formatGain(tmp.currency_gain.meta) : player.matter.formatGain(tmp.currency_gain.matter)
 
     el('antimatter-amount').innerHTML = (tmp.dark_penalty[2] || !hasUpgrade("EM4")) && player.best_matter.gte(1e3) ? `Due to the large amount of matter, you have grown <h4>${format(getAntimatterGrowth().min(player.matter),0)}</h4> antimatter!` : ""
+
+    el('matter-name').innerHTML = player.meta.unl ? "meta-matter" : "matter"
 
     updateTabs()
 }

@@ -598,15 +598,287 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade("DM8"),
 
-        get desc() { return `Enter the <b>???????????</b>. [NYI]` },
+        get desc() { return `Enter the <b>Matterverse</b>, wiping away every matter and its features and replacing matter with <b>meta-matter</b>.
+            Matter and Annihilation tabs, and all previous upgrades and boosts are disabled.
+            Meta-matter is calculated depending on matter. You cannot be undone!` },
         curr: "dark",
 
-        cost: EINF,// 1e63,
+        cost: 1e63,// 1e63,
+
+        on_buy() {
+            prevent_save = true
+            document.body.style.opacity = 0
+
+            setTimeout(()=>{
+                player.meta.unl = true
+
+                player.dark.matter = E(0)
+                player.dark.total = E(0)
+                resetUpgrades("DM")
+
+                RESETS.dark.doReset()
+
+                updateTemp()
+
+                prevent_save = false
+                document.body.style.opacity = 1
+
+                switchTab(2)
+            }, 2500)
+        },
+    },
+
+    "MM1": {
+        max: 1,
+        unl: ()=>true,
+
+        desc: `Generate <b>0.1</b> meta-matter every second.`,
+        curr: "meta",
+
+        cost: E(0),
+    },
+    'MM2': {
+        max: 1,
+        unl: ()=>hasUpgrade('MM1'),
+
+        get base() { return Decimal.mul(0.1,upgradeEffect("MM3")) },
+
+        get desc() { return `Meta-matter adds to the base of meta-matter generation at <b>${formatPercent(this.base)}</b> rate.` },
+        curr: "meta",
+
+        cost: E(1),
+    },
+    "MM3": {
+        unl: ()=>hasUpgrade("MM2"),
+
+        get base() { return Decimal.mul(2,1) },
+        get pow() { return Decimal.mul(upgradeEffect("O1"),simpleUpgradeEffect("MM4",1)) },
+
+        get desc() {
+            let p = this.pow
+            return `Increase the base of <b>MM2</b> by <b>${formatMult(this.base)}</b> per level${p == 1 ? "" : `<sup>${format(p,3)}</sup>`}.`
+        },
+        curr: "meta",
+
+        cost: a => a.pow_base(2).pow_base(1e2),
+        bulk: a => a.log(1e2).log(2).floor().add(1),
+
+        effect(a) {
+            let x = this.base.pow(a.pow(this.pow))
+            return x
+        },
+        effDesc: x => formatMult(x),
+    },
+    'MM4': {
+        max: 1,
+        unl: ()=>hasUpgrade('MM3'),
+
+        get desc() { return `Best meta-matter increases the exponent of <b>MM2</b>'s level to the effect at a reduced rate.` },
+        curr: "meta",
+
+        cost: E('ee5'),
+
+        effect(a) {
+            let d = Decimal.div(0.317,upgradeEffect("MM5"))
+            let b = player.meta.best.add(10).log10().log10()
+            let x = b.div(b.pow(d)).add(1)
+            if (hasUpgrade("O3")) x = x.pow(upgradeEffect("O1"));
+            if (hasUpgrade("O4")) x = x.pow(upgradeEffect("MM5"));
+            return x
+        },
+        effDesc: x => formatMult(x),
+    },
+    'MM5': {
+        unl: ()=>hasUpgrade('MM4'),
+
+        get base() { return Decimal.mul(2,1) },
+        get pow() { return Decimal.mul(1,hasUpgrade("O5")?upgradeEffect("O1"):1) },
+
+        get desc() {
+            let p = this.pow
+            return `The <b>MM4</b>'s effect is <b>${formatMult(this.base)}</b> stronger per level${p == 1 ? "" : `<sup>${format(p,3)}</sup>`}.`
+        },
+        curr: "meta",
+
+        cost: a => a.pow_base(2.5).pow_base(1e3).pow_base(10).pow_base(10),
+        bulk: a => a.log(10).log(10).log(1e3).log(2.5).floor().add(1),
+
+        effect(a) {
+            let x = this.base.pow(a.pow(this.pow))
+            return x
+        },
+        effDesc: x => formatMult(x),
+    },
+    "MM6": {
+        unl: ()=>hasUpgrade("MM5"),
+
+        get base() { return Decimal.mul(0.1,simpleUpgradeEffect("O8")) },
+        get pow() { return Decimal.add(1,upgradeEffect("O6",0)).mul(hasAchievement("ach44")?getAchievementBoost():1) },
+
+        get desc() {
+            let p = this.pow
+            return `Increase the tower height of meta-matter generation by <b>+${format(this.base)}</b> per level${p == 1 ? "" : `<sup>${format(p,3)}</sup>`}.`
+        },
+        curr: "meta",
+
+        cost: a => Decimal.tetrate(5e2, a.sumBase(1.1).add(7)),
+        bulk: a => a.slog(5e2).sub(7).sumBase(1.1,true).add(1).floor(),
+
+        effect(a) {
+            let x = this.base.mul(a.pow(this.pow))
+            return x
+        },
+        effDesc: x => "+"+format(x),
+    },
+
+    "O1": {
+        max: 5,
+        unl: ()=>hasUpgrade('MM3'),
+
+        get base() { return Decimal.mul(2,1) },
+
+        get desc() { return `Reset all previous, but increase the exponent of <b>MM2</b>'s level to its effect by <b>${formatMult(this.base)}</b> per level.` },
+        curr: "meta",
+
+        cost(a) { return Decimal.tetrate(Number.MAX_VALUE, a.add(1)) },
+        bulk(a) { return a.slog(Number.MAX_VALUE).floor() },
+
+        effect(a) {
+            let x = this.base.pow(a)
+            return x
+        },
+        effDesc: x => formatMult(x),
+
+        on_buy() {
+            player.meta.matter = E(0)
+            player.meta.best = E(0)
+
+            resetUpgrades("MM")
+        }
+    },
+    "O2": {
+        max: 1,
+        unl: ()=>hasUpgrade('O1'),
+
+        desc: `Automate <b>MM*</b> upgrades without spending currencies.`,
+        curr: "meta",
+
+        cost: E('ee100'),
+    },
+    "O3": {
+        max: 1,
+        unl: ()=>hasUpgrade('O2'),
+
+        desc: `The <b>O1</b> upgrade affects <b>MM4</b>'s strength.`,
+        curr: "meta",
+
+        cost: E('eee1000'),
+    },
+    "O4": {
+        max: 1,
+        unl: ()=>hasUpgrade('O3'),
+
+        desc: `The <b>MM5</b> upgrade raises the <b>MM4</b>'s effect.`,
+        curr: "meta",
+
+        cost: E('5 PT 3'),
+    },
+    "O5": {
+        max: 1,
+        unl: ()=>hasUpgrade('O4'),
+
+        desc: `The <b>O1</b> upgrade also affects <b>MM5</b>'s exponent.`,
+        curr: "meta",
+
+        cost: E('6 TP 2'),
+    },
+    "O6": {
+        max: 18,
+        unl: ()=>hasUpgrade("O5"),
+
+        get base() { return Decimal.add(1,upgradeEffect("O7",0)) },
+        get pow() { return Decimal.mul(1,1) },
+
+        get desc() {
+            let p = this.pow
+            return `Increase the exponent of <b>MM2</b>'s level to its effect by <b>+${format(this.base)}</b> per level${p == 1 ? "" : `<sup>${format(p,3)}</sup>`}.`
+        },
+        curr: "meta",
+
+        cost: a => Decimal.tetrate(10, a.pow(2).pow_base(10).mul(1e4)),
+        bulk: a => a.slog(10).div(1e4).log10().root(2).add(1).floor(),
+
+        effect(a) {
+            let x = this.base.mul(a.pow(this.pow))
+            return x
+        },
+        effDesc: x => "+"+format(x),
+    },
+    "O7": {
+        max: 4,
+        unl: ()=>hasUpgrade("O5"),
+
+        get base() { return Decimal.mul(0.5,1) },
+        get pow() { return Decimal.mul(1,1) },
+
+        get desc() {
+            let p = this.pow
+            return `Increase the base of <b>O6</b> by <b>+${format(this.base)}</b> per level${p == 1 ? "" : `<sup>${format(p,3)}</sup>`}.`
+        },
+        curr: "meta",
+
+        cost: a => Decimal.tetrate(10, a.pow_base(2).mul(19).pow_base(10)),
+        bulk: a => a.slog(10).div(1e18).log10().div(19).log(2).add(1).floor(),
+
+        effect(a) {
+            let x = this.base.mul(a.pow(this.pow))
+            return x
+        },
+        effDesc: x => "+"+format(x),
+    },
+    "O8": {
+        max: 1,
+        unl: ()=>hasUpgrade('O7'),
+
+        desc: `The base of <b>MM6</b> is boosted by best meta-matter at a reduced rate.`,
+        curr: "meta",
+
+        cost: E('1e140 TP 1'),
+
+        effect(a) {
+            let x = expPow(player.meta.best.max(1).slog(10).add(1),0.65)
+            return x
+        },
+        effDesc: x => formatMult(x),
+    },
+    "O9": {
+        max: 1,
+        unl: ()=>hasUpgrade('O8'),
+
+        desc: `<b style="color : gold">Break everything up to omnipotence...</b>`,
+        curr: "meta",
+
+        cost: E('1e308 TP 1'),
+
+        on_buy() {
+            prevent_save = true
+            document.body.style.opacity = 0
+
+            setTimeout(()=>{
+                unlockAchievement("ach46")
+                document.body.style.opacity = 1
+                el('app').style.display = "none"
+                el('the-end').style.display = "block"
+                el('the-end').style.opacity = 1
+
+                el('full-time').innerHTML = formatTime(player.time_played)
+            }, 2500)
+        }
     },
 }
 
 const UPG_KEYS = Object.keys(UPGRADES)
-const PREFIXES = ["M",'UM','EM',"DM"]
+const PREFIXES = ["M",'UM','EM',"DM","MM","O"]
 
 function getUpgrades(prefix) { return UPG_KEYS.filter(key => key.split(prefix)[0] == "" && Number(key.split(prefix)[1])) }
 
@@ -621,6 +893,8 @@ const PREFIX_NAMES = {
     "UM": "Unnatural Matter",
     "EM": "Exotic Matter",
     "DM": "Dark Matter",
+    "MM": "Meta-Matter",
+    "O": "Operator",
 }
 
 function getUpgradeCost(id) {
@@ -636,7 +910,7 @@ function buyUpgrade(id, all = false, auto = false) {
 
     let cost = getUpgradeCost(id), curr = CURRENCIES[u.curr]
 
-    if (curr.amount.gte(cost)) {
+    if (!Decimal.isNaN(cost) && curr.amount.gte(cost)) {
         let bulk = player.upgrades[id].add(1)
 
         if ((all || auto) && Decimal.gt(max, 1)) {
@@ -654,7 +928,7 @@ function buyUpgrade(id, all = false, auto = false) {
     }
 }
 
-function hasUpgrade(id,l=1) { return player.upgrades[id].gte(l) }
+function hasUpgrade(id,l=1) { return player.upgrades[id]?.gte?.(l) }
 function upgradeEffect(id,def=1) { return tmp.upgs_effect[id] ?? def }
 function simpleUpgradeEffect(id,def=1) { return hasUpgrade(id) ? tmp.upgs_effect[id] ?? def : def }
 
@@ -666,9 +940,13 @@ function updateUpgradesTemp() {
 
     let auto = []
 
-    if (hasUpgrade("UM3")) auto.push(...PREFIX_TO_UPGS['M']);
-    if (hasUpgrade("EM5")) auto.push(...PREFIX_TO_UPGS['UM']);
-    if (hasUpgrade("DM6")) auto.push(...PREFIX_TO_UPGS['EM']);
+    if (!player.meta.unl) {
+        if (hasUpgrade("UM3")) auto.push(...PREFIX_TO_UPGS['M']);
+        if (hasUpgrade("EM5")) auto.push(...PREFIX_TO_UPGS['UM']);
+        if (hasUpgrade("DM6")) auto.push(...PREFIX_TO_UPGS['EM']);
+    }
+
+    if (hasUpgrade("O2")) auto.push(...PREFIX_TO_UPGS['MM']);
 
     tmp.auto_upg = auto
 

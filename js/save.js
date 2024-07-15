@@ -1,6 +1,6 @@
 const VERSION = 1
 const SAVE_ID = "SIGJ2024_save"
-var prevSave = "", autosave
+var prevSave = "", autosave, prevent_save = false
 
 function getPlayerData() {
     let s = {
@@ -29,8 +29,13 @@ function getPlayerData() {
             unl: false,
             matter: E(0),
             total: E(0),
+        },
 
-            anti_time: E(0),
+        meta: {
+            unl: false,
+            matter: E(0),
+            best: E(0),
+            operator: 0,
         },
 
         upgrades: {},
@@ -71,7 +76,7 @@ function loadPlayer(load) {
     player = deepNaN(load, DATA)
     player = deepUndefinedAndDecimal(player, DATA)
 
-    for (let [id, v] of Object.entries(player.upgrades)) if (!player.upgs_unl.includes(id) && v.gte(1)) player.upgs_unl.push(id);
+    for (let [id, v] of Object.entries(player.upgrades)) if (!player.upgs_unl.includes(id) && v.gte?.(1)) player.upgs_unl.push(id);
 }
 
 function clonePlayer(obj,data) {
@@ -114,7 +119,7 @@ function deepUndefinedAndDecimal(obj, data) {
     return obj
 }
 
-function preventSaving() { return false }
+function preventSaving() { return prevent_save }
 
 function save(auto=false) {
     if (auto && false) return

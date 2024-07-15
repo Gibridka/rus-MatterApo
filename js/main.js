@@ -131,7 +131,7 @@ const TAB_IDS = {
             for (let prefix of PREFIXES) {
                 let unl = false, upgs = PREFIX_TO_UPGS[prefix]
 
-                for (let index of upgs) if (player.upgs_unl.includes(index)) {
+                if (!player.meta.unl || !["M","UM","EM","DM"].includes(prefix)) for (let index of upgs) if (tmp.auto_upg.includes(index)) {
                     unl = true
                     break
                 }
@@ -150,15 +150,21 @@ const TAB_IDS = {
             }
         },
     },
+    "meta": {
+        name: "Meta-Matter",
+
+        html: updateMetaMatterHTML,
+    },
 }
 
 const TABS = [
     {
+        unl: ()=>!player.meta.unl,
         name: "Matter",
 
         stab: "matter",
     },{
-        unl: ()=>player.unnatural.unl,
+        unl: ()=>!player.meta.unl && player.unnatural.unl,
         name: "Annihilation",
 
         stab: [
@@ -167,7 +173,12 @@ const TABS = [
             ["dark", ()=>player.dark.unl],
         ],
     },{
-        unl: ()=>hasUpgrade("UM3") || hasUpgrade("EM5"),
+        unl: ()=>player.meta.unl,
+        name: "Meta-Matter",
+
+        stab: "meta",
+    },{
+        unl: ()=>tmp.auto_upg.length > 0,
         name: "Automations",
 
         stab: "auto",

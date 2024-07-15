@@ -3,6 +3,9 @@ function loadGame(start=true, gotNaN=false) {
     player = getPlayerData()
     load(prevSave)
     reloadTemp()
+    prevent_save = false
+
+    if (player.meta.unl) switchTab(2)
 
     if (start) {
         setupHTML()

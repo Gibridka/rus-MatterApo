@@ -16,6 +16,7 @@ body {
     background-color: white;
     text-shadow: 1px 1px 1px #0004;
     overflow-x: hidden;
+    transition: opacity 2s linear;
 }
 
 .table {
@@ -321,10 +322,27 @@ button.half-huge-btn {
     bottom: 5px;
 }
 
-#upg-DM9-div {
+#upg-DM9-div, #upg-O9-div {
     grid-area: 3 / 1 / 4 / 5;
 }
 
 img {
     vertical-align: middle;
+}
+
+#upg-MM5-div {
+    grid-area: 2 / 1 / 3 / 3;
+}
+
+#upg-MM6-div {
+    grid-area: 2 / 3 / 3 / 5;
+}
+
+#the-end {
+    transition: opacity 1s;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
