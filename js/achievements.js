@@ -1,131 +1,131 @@
 const Achievements = {
     'ach11': {
-        title: `Matter Dimensions?`,
-        get desc() { return `Start generating matter.` },
+        title: `Измерения Материи?`,
+        get desc() { return `Начни генерацию материи.` },
         check: () => hasUpgrade("M1"),
     },
     'ach12': {
-        title: `Oh no, everything gets wiped!`,
-        get desc() { return `Annihilate matter.` },
+        title: `О нет, все пропало! `,
+        get desc() { return `Уничтожь всю материю.` },
     },
     'ach13': {
-        title: `Jacorbian-RedSharkian balancing in a nutshell`,
-        get desc() { return `Reach <b>${format(1e100)}</b> matter.` },
+        title: `Балансирование Jacorb'а и RedShark'а в двух словах`,
+        get desc() { return `Достигни <b>${format(1e100)}</b> материи.` },
         check: () => player.matter.gte(1e100),
-        get reward() { return `<b>^1.05</b> to matter generation.` },
+        get reward() { return `<b>^1.05</b> к генерации материи.` },
     },
     'ach14': {
-        title: `Finally an automation`,
-        get desc() { return `Purchase the <b>UM3</b> upgrade.` },
+        title: `Наконец-то, а то я устал`,
+        get desc() { return `Купи улучшение <b>UM3</b>.` },
         check: () => hasUpgrade("UM3"),
     },
     'ach15': {
-        title: `Annihilation inside annihilation?!`,
-        get desc() { return `Annihilate unnatural matter.` },
+        title: `Устранение в квадрате?!`,
+        get desc() { return `Уничтожь нетрадиционную материю.` },
     },
     'ach16': {
-        title: `Inflation never ends`,
-        get desc() { return `Reach <b>${format('ee25')}</b> matter.` },
+        title: `У инфляции нет конца`,
+        get desc() { return `Достигни <b>${format('ee25')}</b> материи.` },
         check: () => player.matter.gte('ee25'),
     },
 
     'ach21': {
-        title: `No more annihilation, but at what cost?`,
-        get desc() { return `Purchase the <b>EM4</b> upgrade.` },
+        title: `Устранения больше нет, однако какой ценной`,
+        get desc() { return `Купи улучшение <b>EM4</b>.` },
         check: () => hasUpgrade("EM4"),
     },
     'ach22': {
-        title: `Wait, that antimatter is dangerous`,
-        get desc() { return `Have at least <b>1 day</b> of antimatter growth (approx. <b>${format(getAntimatterGrowth(E(86400)))}</b> antimatter).` },
+        title: `Так стоп, эта антиматерия опасна`,
+        get desc() { return `Имей по крайней мере <b>целый день</b> роста антиматерии (примерн. <b>${format(getAntimatterGrowth(E(86400)))}</b> антиматерии).` },
         check: () => getAntimatterGrowth().gte(getAntimatterGrowth(E(86400))),
-        get reward() { return `<b>Double</b> the time speed of antimatter and natural matter growths.` },
+        get reward() { return `<b>Удвоение</b> скорости роста антиматерии и натуральной материи` },
     },
     'ach23': {
-        title: `Never mind, I don't like inflation`,
-        get desc() { return `Reach <b>${format('ee100')}</b> matter without buying the <b>M2</b> upgrade.` },
+        title: `Неважно, мне не нравиться инфлянция`,
+        get desc() { return `Достигни <b>${format('ee100')}</b> материи без покупки улучшения <b>M2</b>.` },
         check: () => player.matter.gte('ee100') && !hasUpgrade("M2"),
     },
     'ach24': {
-        title: `Jacorbian-RedSharkian balancing in a nutshell II`,
-        get desc() { return `Reach <b>${format(1e100)}</b> total unnatural matter.` },
+        title: `Балансирование Jacorb'а и RedShark'а в двух словах II`,
+        get desc() { return `Достигни всего <b>${format(1e100)}</b> нетрадиционной материи.` },
         check: () => player.unnatural.total.gte(1e100),
-        get reward() { return `<b>^1.05</b> to unnatural matter gain.` },
+        get reward() { return `<b>^1.05</b> к нетрадиционной материи` },
     },
     'ach25': {
-        title: `Can you stop annihilating even more beyond?`,
-        get desc() { return `Annihilate exotic matter.` },
+        title: `Ты можешь перестать уничтожать еще больше?`,
+        get desc() { return `Уничтожь экзотическую материю.` },
     },
     'ach26': {
-        title: `Ugh, I feel annihilation going to be useful`,
-        get desc() { return `Annihilate exotic matter without buying the <b>EM4</b> upgrade.` },
-        get reward() { return `Keep the <b>EM4</b> upgrade on exotic matter annihilation, and it is <b>${formatMult(5)}</b> faster.` },
+        title: `Ух, чую устранение будет полезным`,
+        get desc() { return `Уничтожь экзотическую материю без покупки улучшения <b>EM4</b>.` },
+        get reward() { return `Сохранение улучшение <b>EM4</b> при уничтожении экзотической материи и оно в <b>${formatMult(5)}</b> быстрее.` },
     },
 
     'ach31': {
-        title: `I'm confused about penalty`,
-        get desc() { return `Fine <b>2nd</b> dark penalty.` },
+        title: `Я запутался в наказаниях`,
+        get desc() { return `Встреть <b>второе</b> темное наказание.` },
         check: () => tmp.dark_penalty[1],
     },
     'ach32': {
-        title: `NO MORE ANNOYING ANNIHILATION!`,
-        get desc() { return `Purchase the <b>DM5</b> upgrade.` },
+        title: `НАКОНЕЦ-ТО, БОЛЬШЕ НИКАКИХ УСТРАНЕНИЙ!`,
+        get desc() { return `Получи улучшение <b>DM5</b>.` },
         check: () => hasUpgrade("DM5"),
     },
     'ach33': {
-        title: `Jacorbian-RedSharkian balancing in a nutshell III`,
-        get desc() { return `Reach <b>${format(1e100)}</b> total exotic matter.` },
+        title: `Балансирование Jacorb'а и RedShark'а в двух словах III`,
+        get desc() { return `Достигни <b>${format(1e100)}</b> всего экзотической материи.` },
         check: () => player.exotic.total.gte(1e100),
-        get reward() { return `<b>^1.05</b> to exotic matter gain.` },
+        get reward() { return `<b>^1.05</b> к экзотической материи.` },
     },
     'ach34': {
-        title: `There's no point in end inflation`,
-        get desc() { return `Reach <b>${format('eee100')}</b> matter.` },
+        title: `Смысла в инфляции больше нет`,
+        get desc() { return `Достигни <b>${format('eee100')}</b> материи.` },
         check: () => player.matter.gte('eee100'),
     },
     'ach35': {
         title: `<img src="style/bart.png">`,
-        get desc() { return `Purchase the <b>DM8</b> upgrade.` },
+        get desc() { return `Купите улучшение <b>DM8</b>.` },
         check: () => hasUpgrade("DM8"),
-        get reward() { return `Multiply the time speed of antimatter growth by <b>100</b>. Why are you looking this?` },
+        get reward() { return `<b>x100</b> к скорости роста антиматерии. А ты ожидал чего-то особеного?` },
     },
     'ach36': {
-        title: `You win, but at what cost?`,
-        get desc() { return `Reach <b>${format("175 PT 5.741225")}</b> matter.` },
+        title: `Ты победил, но чем пришлось заплатить?`,
+        get desc() { return `Достигни <b>${format("175 PT 5.741225")}</b> материи.` },
         check: () => player.matter.gte("175 PT 5.741225"),
     },
 
     'ach41': {
-        title: `"Bro it's canon event"`,
-        get desc() { return `Enter the <b>Matterverse</b>.` },
+        title: `"бро это каноничное событие"`,
+        get desc() { return `Войди в <b>Материверс</b>.` },
         check: () => player.meta.unl,
     },
     'ach42': {
-        title: `INFINITY ANNIHILATION???`,
-        get desc() { return `Reach <b>${format(Number.MAX_VALUE)}</b> meta-matter (<b>${META_MATTER.formatFull(Number.MAX_VALUE)}</b>).` },
+        title: `БЕСКОНЕЧНОЕ УСТРАНЕНИЕ???`,
+        get desc() { return `Достигни <b>${format(Number.MAX_VALUE)}</b> мета-материи (<b>${META_MATTER.formatFull(Number.MAX_VALUE)}</b>).` },
         check: () => player.meta.matter.gte(Number.MAX_VALUE),
-        get reward() { return `Multiply meta-matter generation by <b>10</b>.` },
+        get reward() { return `Генерация мета-материи улучшена в <b>10</b>.` },
     },
     'ach43': {
-        title: `Time is relative to annihilation`,
+        title: `Время относительно для устранения`,
         b: Decimal.tetrate(Number.MAX_VALUE,2),
-        get desc() { return `Reach <b>${format(this.b)}</b> meta-matter (<b>${META_MATTER.formatFull(this.b)}</b>).` },
+        get desc() { return `Достигни <b>${format(this.b)}</b> мета-материи (<b>${META_MATTER.formatFull(this.b)}</b>).` },
         check() { return player.meta.matter.gte(this.b) },
     },
     'ach44': {
-        title: `Tetration begins to harm!`,
-        get desc() { return `Purchase the <b>O6</b> upgrade.` },
+        title: `Tetration начинает вредить!`,
+        get desc() { return `Купи улучшение <b>O6</b>.` },
         check: () => hasUpgrade("O6"),
-        get reward() { return `Achievement boost now affects the exponent of <b>MM6</b>'s level to its effect.` },
+        get reward() { return `Усиление от достижений теперь влияет на экспоненту эффекта улучшения <b>MM6</b>.` },
     },
     'ach45': {
-        title: `Is there meta-meta-matter soon?`,
+        title: `Там дальше будет мета-мета-материя?`,
         b: Decimal.tetrate(Number.MAX_VALUE,1e100),
-        get desc() { return `Reach <b>${format(this.b)}</b> meta-matter (<b>${META_MATTER.formatFull(this.b)}</b>).` },
+        get desc() { return `Достигни <b>${format(this.b)}</b> мета-материи (<b>${META_MATTER.formatFull(this.b)}</b>).` },
         check() { return player.meta.matter.gte(this.b) },
     },
     'ach46': {
-        title: `The master of annihilation`,
-        get desc() { return `Beat the game.` },
+        title: `Мастер устранений`,
+        get desc() { return `Победи данную игру. На этот раз точно.` },
     },
 }
 
@@ -139,7 +139,7 @@ function updateAchievements() {
 
         let h = `<b class="ach-title">${v.title}</b><br class='line'>${v.desc}`
 
-        if ('reward' in v) h += `<br><i>Reward: ${v.reward}</i>`;
+        if ('reward' in v) h += `<br><i>Награда: ${v.reward}</i>`;
 
         updateTooltip(ach,h)
 
@@ -167,7 +167,7 @@ function setupAchievements() {
 function unlockAchievement(id) {
     if (!player.achievements.includes(id)) {
         player.achievements.push(id)
-        addNotify(`<b>Achievement unlocked:</b> ${Achievements[id].title}`)
+        addNotify(`<b>Получено достижение:</b> ${Achievements[id].title}`)
     }
 }
 
