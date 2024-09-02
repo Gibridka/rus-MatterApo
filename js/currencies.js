@@ -6,7 +6,7 @@ const CURRENCIES = {
         get best() { return player.best_matter },
         set best(v) { player.best_matter = v.max(0) },
 
-        name: "matter",
+        name: "материи",
     
         get gain() {
             if (!hasUpgrade('M1')) return E(0)
@@ -48,7 +48,7 @@ const CURRENCIES = {
         get total() { return player.unnatural.total },
         set total(v) { player.unnatural.total = v.max(0) },
 
-        name: "unnatural matter",
+        name: "нетрадиционная материи",
     
         get gain() {
             if (player.best_matter.lt(1e3)) return E(0)
@@ -78,7 +78,7 @@ const CURRENCIES = {
         get total() { return player.exotic.total },
         set total(v) { player.exotic.total = v.max(0) },
 
-        name: "exotic matter",
+        name: "экзоктической материи",
     
         get gain() {
             if (player.unnatural.total.lt(1e4)) return E(0)
@@ -111,7 +111,7 @@ const CURRENCIES = {
         get total() { return player.dark.total },
         set total(v) { player.dark.total = v.max(0) },
 
-        name: "dark matter",
+        name: "темной материи",
     
         get gain() {
             if (player.exotic.total.lt(1e9)) return E(0)
@@ -132,7 +132,7 @@ const CURRENCIES = {
         get best() { return player.meta.best },
         set best(v) { player.meta.best = v.max(0) },
 
-        name: "meta-matter",
+        name: "мета-материи",
 
         get gain() {
             if (!hasUpgrade("MM1")) return E(0)
