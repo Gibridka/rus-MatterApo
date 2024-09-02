@@ -112,7 +112,7 @@ const Achievements = {
         check() { return player.meta.matter.gte(this.b) },
     },
     'ach44': {
-        title: `Tetration начинает вредить!`,
+        title: `Тетрация начинает вредить!`,
         get desc() { return `Купи улучшение <b>O6</b>.` },
         check: () => hasUpgrade("O6"),
         get reward() { return `Усиление от достижений теперь влияет на экспоненту эффекта улучшения <b>MM6</b>.` },
