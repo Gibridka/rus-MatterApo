@@ -44,7 +44,7 @@ const TAB_IDS = {
         },
     },
     'unnatural': {
-        name: "Unnatural Matter",
+        name: "Нетрадиционная Материя",
 
         html() {
             el('unnatural-amount').innerHTML = format(player.unnatural.matter,0)
@@ -53,8 +53,8 @@ const TAB_IDS = {
             el('unnatural-boost').innerHTML = formatMult(tmp.unnatural_boost)
 
             el('anti-unnaturalmatter-amount').innerHTML = hasUpgrade("DM5") ? "" : player.unnatural.total.gte(1e4)
-            ? `Due to the large amount of unnatural matter, you have grown <h4>${format(getAntiUnnaturalGrowth().min(player.unnatural.total),0)}</h4> natural matter!`
-            + (hasUpgrade("EM4") ? "" : ` (<h4>${format(getAntiUnnaturalGrowth(tmp.unnatural_speed).min(player.unnatural.total.add(tmp.currency_gain.unnatural)),0)}</h4> on next matter annihilation)`)
+            ? `Из-за большого количества нетрадиционной материи, у вас выросло <h4>${format(getAntiUnnaturalGrowth().min(player.unnatural.total),0)}</h4> традиционной материи!`
+            + (hasUpgrade("EM4") ? "" : ` (<h4>${format(getAntiUnnaturalGrowth(tmp.unnatural_speed).min(player.unnatural.total.add(tmp.currency_gain.unnatural)),0)}</h4> в следующем устранении материи)`)
             : ""
 
             el('unnatural-gain').innerHTML = hasUpgrade("EM4") ? formatGain(player.unnatural.matter, tmp.currency_gain.unnatural.mul(CURRENCIES.unnatural.passive)) : `(+${format(tmp.currency_gain.unnatural,0)}/annihilation)`
@@ -63,7 +63,7 @@ const TAB_IDS = {
         },
     },
     'exotic': {
-        name: "Exotic Matter",
+        name: "Экзоктическая материя",
 
         html() {
             el('exotic-amount').innerHTML = format(player.exotic.matter,0)
@@ -74,8 +74,8 @@ const TAB_IDS = {
             el('exotic-boost1').innerHTML = formatMult(effect[0]), el('exotic-boost2').innerHTML = formatPow(effect[1],3);
 
             el('anti-exoticmatter-amount').innerHTML = hasUpgrade("DM5") ? "" : player.exotic.total.gte(1e9)
-            ? `Due to the large amount of exotic matter, you have grown <h4>${format(getAntiExoticGrowth().min(player.exotic.total),0)}</h4> corrupted matter!`
-            + (hasUpgrade("DM5") ? "" : ` (<h4>${format(getAntiExoticGrowth(1).min(player.exotic.total.add(tmp.currency_gain.exotic)),0)}</h4> on next unnatural matter annihilation)`)
+            ? `Из-за большого количества экзоктической материи, у вас выросло <h4>${format(getAntiExoticGrowth().min(player.exotic.total),0)}</h4> испорченной материи!`
+            + (hasUpgrade("DM5") ? "" : ` (<h4>${format(getAntiExoticGrowth(1).min(player.exotic.total.add(tmp.currency_gain.exotic)),0)}</h4> в следующем устранении нетрадиционной материи)`)
             : ""
 
             el('exotic-gain').innerHTML = hasUpgrade("DM5") ? formatGain(player.exotic.matter, tmp.currency_gain.exotic.mul(CURRENCIES.exotic.passive)) : `(+${format(tmp.currency_gain.exotic,0)}/annihilation)`
@@ -84,7 +84,7 @@ const TAB_IDS = {
         },
     },
     'dark': {
-        name: "Dark Matter",
+        name: "Темная Материя",
 
         html() {
             el('dark-amount').innerHTML = format(player.dark.matter,0)
@@ -109,7 +109,7 @@ const TAB_IDS = {
         },
     },
     "options": {
-        name: "Options",
+        name: "Настройки",
 
         html() {
             NOTATIONS_OPTIONS.forEach((x,i) => {
@@ -118,12 +118,12 @@ const TAB_IDS = {
         },
     },
     "achs": {
-        name: "Achievements",
+        name: "Достижения",
 
         html: updateAchievements,
     },
     "auto": {
-        name: "Automations",
+        name: "Автоматизация",
 
         html() {
             let au = player.auto_upgs
@@ -151,7 +151,7 @@ const TAB_IDS = {
         },
     },
     "meta": {
-        name: "Meta-Matter",
+        name: "Мета-Материч",
 
         html: updateMetaMatterHTML,
     },
@@ -160,12 +160,12 @@ const TAB_IDS = {
 const TABS = [
     {
         unl: ()=>!player.meta.unl,
-        name: "Matter",
+        name: "Материя",
 
         stab: "matter",
     },{
         unl: ()=>!player.meta.unl && player.unnatural.unl,
-        name: "Annihilation",
+        name: "Устранение",
 
         stab: [
             ["unnatural"],
@@ -174,20 +174,20 @@ const TABS = [
         ],
     },{
         unl: ()=>player.meta.unl,
-        name: "Meta-Matter",
+        name: "Мета-Материя",
 
         stab: "meta",
     },{
         unl: ()=>tmp.auto_upg.length > 0,
-        name: "Automations",
+        name: "Автоматизация",
 
         stab: "auto",
     },{
-        name: "Achievements",
+        name: "Достижения",
 
         stab: "achs",
     },{
-        name: "Options",
+        name: "Настройки",
 
         stab: "options",
     },
@@ -283,8 +283,8 @@ const DARK_PENALTY = [
 
         get desc() {
             return [
-                `Exotic matter's multiplier is reduced by <b>^0.6</b>.`,
-                `Improve unnatural matter gain even better.`
+                `Множитель для экзотики понижен в <b>^0.6</b>.`,
+                `Добыча нетрадиционной материи стала лучше.`
             ]
         },
     },{
@@ -292,8 +292,8 @@ const DARK_PENALTY = [
 
         get desc() {
             return [
-                `Matter generation slows down even more above <b>${format(tmp.matter_overflow_start)}</b>.`,
-                `Remove the scaling of <b>M6</b>.`
+                `Генерация материи замедляется ещё больше, если оно выше <b>${format(tmp.matter_overflow_start)}</b>.`,
+                `Масштабирование для <b>M6</b> больше нет.`
             ]
         },
     },{
@@ -301,8 +301,8 @@ const DARK_PENALTY = [
 
         get desc() {
             return [
-                `Antimatter growth now reappears and is unaffected by <b>M5</b>. Matter annihilation forces exotic matter annihiliation for dark matter.`,
-                `The time of antimatter growth boosts dark matter gain slightly.`
+                `Антиматерия вновь растет и получает иммунитет от <b>M5</b>. Устранение материи вынуждает экзоктическую материю устраниться за тёмную материю.`,
+                `Время роста антиматерии слегка улучшает добычу тёмной материи.`
             ]
         },
     },{
@@ -310,8 +310,8 @@ const DARK_PENALTY = [
 
         get desc() {
             return [
-                `The base of exotic matter (from unnatural matter) slows down even more above <b>${format(1e100)}</b> and again.`,
-                `Unlock final upgrades.`
+                `База для экзоктической материи (из нетрадиционной материи) замедляется ещё сильнее, если оно выше <b>${format(1e100)}</b> и вновь.`,
+                `Открывает последние улучшения.`
             ]
         },
     },
