@@ -980,7 +980,7 @@ function updateUpgrades(prefix) {
             let curr = CURRENCIES[u.curr]
 
             let h = ""
-            if (Decimal.gt(max,1)) h += `<div>[Level ${format(lvl,0) + (Decimal.lt(max,EINF) ? " / " + format(max,0) : "")}]</div>`;
+            if (Decimal.gt(max,1)) h += `<div>[Уровень ${format(lvl,0) + (Decimal.lt(max,EINF) ? " / " + format(max,0) : "")}]</div>`;
             h += u.desc
 
             if (u.effDesc) h += `<br>Эффект: ${u.effDesc(tmp.upgs_effect[index])}`;
