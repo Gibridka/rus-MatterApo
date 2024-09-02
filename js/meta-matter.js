@@ -1,7 +1,7 @@
 const META_MATTER = {
     prefix: [
-        ['', 'unnatural', 'exotic', 'dark', 'red', 'pink', 'purple', 'violet', 'blue', 'cyan', 'green', 'lime', 'yellow', 'orange', 'white', 'fading'],
-        ["infinity", "eternity", "reality", "equality", "affinity", "celerity", "identity", "vitality", "immunity", "atrocity"],
+        ['', 'нетрадиционная', 'экзоктическая', 'темная', 'красная', 'розовая', 'феолетовая', 'фиалковая', 'синяя', 'бюрюзовая', 'зеленая', 'лаймовая', 'желтая', 'оранжевая', 'белая', 'распадающаяся'],
+        ["бесконечная", "вечная", "реалистичная", "равная", "близкая", "известная", "индивидуальная", "важная", "имунитетная", "зерская"],
     ],
     
     get base() { return 1e3 },
