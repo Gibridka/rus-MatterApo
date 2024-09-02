@@ -162,34 +162,34 @@ const TABS = [
         unl: ()=>!player.meta.unl,
         name: "Материя",
 
-        stab: "matter",
+        stab: "материи",
     },{
         unl: ()=>!player.meta.unl && player.unnatural.unl,
         name: "Устранение",
 
         stab: [
-            ["unnatural"],
-            ["exotic", ()=>player.exotic.unl],
-            ["dark", ()=>player.dark.unl],
+            ["нетрадиционное"],
+            ["экзоктическое", ()=>player.exotic.unl],
+            ["темное", ()=>player.dark.unl],
         ],
     },{
         unl: ()=>player.meta.unl,
         name: "Мета-Материя",
 
-        stab: "meta",
+        stab: "мета",
     },{
         unl: ()=>tmp.auto_upg.length > 0,
         name: "Автоматизация",
 
-        stab: "auto",
+        stab: "авто",
     },{
         name: "Достижения",
 
-        stab: "achs",
+        stab: "достиж",
     },{
         name: "Настройки",
 
-        stab: "options",
+        stab: "настройки",
     },
 ]
 
