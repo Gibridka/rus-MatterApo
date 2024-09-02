@@ -68,7 +68,7 @@ function wipe(reload) {
 }
 
 function wipeConfirm() {
-    if (confirm("Are you sure you want to wipe?")) wipe(true)
+    if (confirm("Вы уверены, что хотите начать с самого начала?")) wipe(true)
 }
 
 function loadPlayer(load) {
@@ -128,7 +128,7 @@ function save(auto=false) {
     if (localStorage.getItem(SAVE_ID) == '') wipe()
     localStorage.setItem(SAVE_ID,str)
     prevSave = str
-    addNotify("Game Saved!")
+    addNotify("Игра сохранена!")
 }
 
 function load(x){
@@ -162,18 +162,18 @@ function export_copy() {
 }
 
 function importy() {
-    loadgame = prompt("Paste in your save. WARNING: WILL OVERWRITE YOUR CURRENT SAVE!")
+    loadgame = prompt("Вставьте свое сохранение. ВНИМАНИЕ: ЭТО ПЕРЕЗАПИШЕТ ВАШЕ ТЕКУЩЕЕ СОХРАНЕНИЕ")
     if (loadgame != null) {
         let keep = player
         try {
 			if (findNaN(loadgame, true)) {
-				error("Error Importing, because it got NaNed")
+				error("Ошибка импорта. Причина: Сохранение выдает NaNed")
 				return
 			}
 			localStorage.setItem(SAVE_ID, loadgame)
 			location.reload()
         } catch (error) {
-            error("Error Importing")
+            error("Ошибка импорта.")
             player = keep
         }
     }
@@ -188,7 +188,7 @@ function importy_file() {
         fr.onload = () => {
             let loadgame = fr.result
             if (findNaN(loadgame, true)) {
-				error("Error Importing, because it got NaNed")
+				error("Ошибка импорта. Причина: Сохранение выдает NaNed")
 				return
 			}
             localStorage.setItem(SAVE_ID, loadgame)
@@ -201,7 +201,7 @@ function importy_file() {
 function checkNaN() {
     let naned = findNaN(player)
     if (naned) {
-        warn("Game Data got NaNed because of "+naned.bold())
+        warn("Игровые данные выдают NaNed из-за "+naned.bold())
         resetTemp()
         loadGame(false, true)
         tmp.start = 1
