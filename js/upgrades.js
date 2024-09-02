@@ -983,9 +983,9 @@ function updateUpgrades(prefix) {
             if (Decimal.gt(max,1)) h += `<div>[Level ${format(lvl,0) + (Decimal.lt(max,EINF) ? " / " + format(max,0) : "")}]</div>`;
             h += u.desc
 
-            if (u.effDesc) h += `<br>Effect: ${u.effDesc(tmp.upgs_effect[index])}`;
+            if (u.effDesc) h += `<br>Эффект: ${u.effDesc(tmp.upgs_effect[index])}`;
             var cost = getUpgradeCost(index)
-            if (!bought) h += `<br>Cost: ${format(cost,0)} ${curr.name}`;
+            if (!bought) h += `<br>Стоймость: ${format(cost,0)} ${curr.name}`;
 
             el('upg-' + index + '-desc').innerHTML = h
             upg_elem.className = el_classes({bought, locked: !bought && (tmp.lock_upg.includes(index) || curr.amount.lt(cost))})
