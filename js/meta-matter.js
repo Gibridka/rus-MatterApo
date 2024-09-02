@@ -28,7 +28,7 @@ const META_MATTER = {
             if (tier_f % 16 > 0) h += this.prefix[0][tier_f%16] + " ";
         }
 
-        return h + "matter"
+        return h + "материи"
     },
 }
 
