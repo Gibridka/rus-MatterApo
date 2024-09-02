@@ -3,7 +3,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>true,
 
-        desc: `Generate <b>1</b> matter every second.`,
+        desc: `Генерирует <b>1</b> материю в секунду.`,
         curr: "matter",
 
         cost: E(0),
@@ -18,7 +18,7 @@ const UPGRADES = {
 
         get desc() {
             let pow = this.pow
-            return `Increase matter generation by <b>${formatMult(this.base)}</b> per level${pow > 1 ? `<sup>${format(pow,3)}</sup>` : ""}.`
+            return `Усиливает генерацию материи в <b>${formatMult(this.base)}</b> per level${pow > 1 ? `<sup>${format(pow,3)}</sup>` : ""}.`
         },
         curr: "matter",
 
@@ -58,7 +58,7 @@ const UPGRADES = {
 
         get desc() {
             let base = this.base
-            return `Increase the exponent of <b>M2</b>'s level to its effect by <b>+${format(base)}</b> per square-rooted level.`
+            return `Увеличивает экспоненту эффектова от <b>M2</b> на <b>+${format(base)}</b> за каждый квадратный-уровень.`
         },
         curr: "matter",
 
@@ -85,7 +85,7 @@ const UPGRADES = {
 
         get desc() {
             let base = this.base
-            return `Increase the base of <b>M2</b> by <b>+${format(base)}</b> per level.`
+            return `Увеличивает базу <b>M2</b> на <b>+${format(base)}</b> за уровень.`
         },
         curr: "matter",
 
@@ -103,7 +103,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade('M4'),
 
-        desc: `Matter boosts unnatural matter gain, but speeds time of antimatter growth at same rate.`,
+        desc: `Материя усиливает добычу нетрадиционной материи и ускоряет рост антиматерии одновременно.`,
         curr: "matter",
 
         cost: 1e150,
@@ -122,7 +122,7 @@ const UPGRADES = {
 
         get desc() {
             let base = this.base
-            return `Increase the base of <b>M3</b> & <b>M4</b> by <b>+${format(base)}</b> per ${hasUpgrade("DM2") ? "" : hasUpgrade("UM6") ? "square-rooted" : "cube-rooted"} level.`
+            return `Увеличивает базу для <b>M3</b> и <b>M4</b> на <b>+${format(base)}</b> за ${hasUpgrade("DM2") ? "" : hasUpgrade("UM6") ? "квадртанокоревой" : "кубокорневой"} уровень.`
         },
         curr: "matter",
 
@@ -140,7 +140,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade('M6'),
 
-        desc: `Time of antimatter growth raises matter generation at a reduced rate.`,
+        desc: `Время роста антиматерии теперь усиливает генерацию материи в уменьшенном порядке.`,
         curr: "matter",
 
         cost: E('e5555'),
@@ -157,7 +157,7 @@ const UPGRADES = {
 
         get base() { return Decimal.add(2,upgradeEffect("M9")) },
 
-        get desc() { return `<b>M5</b>'s effect is raised to the <b>${format(this.base)}th</b> power.` },
+        get desc() { return `Эффект <b>M5</b> увеличен в <b>${format(this.base)}ом</b> порядке.` },
         curr: "matter",
 
         cost: E('e1.8e4'),
@@ -170,7 +170,7 @@ const UPGRADES = {
 
         get desc() {
             let base = this.base
-            return `Increase the base of <b>M8</b> by <b>+${format(base)}</b> per level.`
+            return `Увеличивает базу для <b>M8</b> на <b>+${format(base)}</b> за уровень.`
         },
         curr: "matter",
 
@@ -188,7 +188,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade('M9'),
 
-        desc: `The exponent of matter generation is raised to the <b>1.05th</b> power.`,
+        desc: `Экспонента генерации материи увеличено в <b>1.05</b> степене.`,
         curr: "matter",
 
         cost: E('ee200'),
@@ -196,7 +196,7 @@ const UPGRADES = {
     'M11': {
         unl: ()=>hasUpgrade('M10') && player.dark.unl,
 
-        desc: `Increase the exponent of matter generation by <b>^1.1</b> per level.`,
+        desc: `Увеличивает экспоненту генерации материи на <b>^1.1</b> за уровень.`,
         curr: "matter",
 
         cost: a => a.sumBase(1.1).pow_base(1.5).mul(10000).pow_base(10).pow_base(10),
@@ -212,7 +212,7 @@ const UPGRADES = {
     'M12': {
         unl: ()=>hasUpgrade('M11'),
 
-        desc: `All previous <b>M*</b> rebuyable upgrades are <b>+100%</b> stronger.`,
+        desc: `Все прошлые повторно покупаемые улучшения <b>M*</b> теперь в <b>+100%</b> сильнее.`,
         curr: "matter",
 
         cost: a => a.sumBase(1.1).pow_base(1e3).mul(1e27).pow_base(10).pow_base(10),
@@ -231,7 +231,7 @@ const UPGRADES = {
         get base() { return Decimal.add(2, upgradeEffect('UM7',0)) },
 
         get desc() {
-            return `Increase unnatural matter gain by <b>${formatMult(this.base)}</b> on level.`
+            return `Добыча нетрадиционной материи увеличина в <b>${formatMult(this.base)}</b> на текущем уровне.`
         },
         curr: "unnatural",
 
@@ -248,7 +248,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade('UM1'),
 
-        desc: `Increase the exponent of the unnatural matter boost to matter generation based on your matter.`,
+        desc: `Улучшает экспоненту усиления для генерации материи от нетрадиционной материи на основе твой материи.`,
         curr: "unnatural",
 
         cost: 1e2,
@@ -264,7 +264,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade('UM2'),
 
-        desc: `Automate <b>M*</b> upgrades without spending currencies.`,
+        desc: `Автоматическое получение улучшений <b>M*</b> без фактической траты валюты.`,
         curr: "unnatural",
 
         cost: 1e3,
@@ -273,7 +273,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade('UM3'),
 
-        desc: `Increase the exponent of the unnatural matter boost to matter generation based on your total unnatural matter.`,
+        desc: `Улучшает экспоненту усиления для генерации материи от нетрадиционной материи на основе всей полученной нетрадиционной материи.`,
         curr: "unnatural",
 
         cost: 1e4,
@@ -288,7 +288,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>player.exotic.unl && hasUpgrade('UM4'),
 
-        desc: `Total unnatural matter boosts exotic matter gain, but speeds time of natural matter growth at same rate.`,
+        desc: `Вся нетрадиционная материя усиливает добычу экзоктической материи, но в том же порядке увеличивает скорость роста традиционной.`,
         curr: "unnatural",
 
         cost: 1e9,
@@ -303,7 +303,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade('UM5'),
 
-        desc: `Improve <b>M6</b>'s effect and achievement's boost better.`,
+        desc: `Улучшение эффекта <b>M6</b> и усиления от достижений.`,
         curr: "unnatural",
 
         cost: 1e12,
@@ -315,7 +315,7 @@ const UPGRADES = {
 
         get desc() {
             let base = this.base
-            return `Increase the base of <b>UM1</b> by <b>+${format(base)}</b> per level.`
+            return `Увеличивает базу для <b>UM1</b> на <b>+${format(base)}</b> за уровень.`
         },
         curr: "unnatural",
 
@@ -331,7 +331,7 @@ const UPGRADES = {
     "UM8": {
         unl: ()=>hasUpgrade('UM7'),
 
-        desc: `Delay the first scaling of <b>M2</b> by <b>+10</b> per level (normally 10).`,
+        desc: `Отдаляет первое масштабирование <b>M2</b> на <b>+10</b> за уровень (обычно 10).`,
         curr: "unnatural",
 
         cost: a => a.sumBase(1.1).pow_base(10).mul(1e40),
@@ -347,7 +347,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade('UM8') && player.dark.unl,
 
-        desc: `<b>UM8</b> now affects <b>M3</b>'s scaling at a 50% rate.`,
+        desc: `<b>UM8</b> теперь влияет на масштабирование <b>M3</b> в 50% порядке.`,
         curr: "unnatural",
 
         cost: 1e130,
@@ -356,7 +356,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade('UM9'),
 
-        desc: `Achievement's boost now affects <b>M6</b>'s base.`,
+        desc: `Усиление от достижений теперь влияют на базу <b>M6</b>.`,
         curr: "unnatural",
 
         cost: 1e270,
@@ -365,7 +365,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade('UM10'),
 
-        desc: `Total unnatural matter boost is improved tetrationally.`,
+        desc: `Усиление от всей нетрадиционной материи теперь улучшается тетрически.`,
         curr: "unnatural",
 
         cost: E('e3750'),
@@ -373,7 +373,7 @@ const UPGRADES = {
     "UM12": {
         unl: ()=>hasUpgrade('UM11'),
 
-        desc: `<b>Square</b> the exponent of unnatural matter per level.`,
+        desc: `<b>Квадратизация</b> экспонеты для нетрадиционной материи за каждый уровень.`,
         curr: "unnatural",
 
         cost: a => a.sumBase(1.1).pow_base(3).mul(150).pow_base(10).pow_base(10),
@@ -390,7 +390,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>true,
 
-        desc: `<b>UM2</b>'s effect is <b>squared</b> above <b>+1</b>.`,
+        desc: `Эффект <b>UM2</b> теперь в <b>квадрате</b>, если он выше <b>+1</b>.`,
         curr: "exotic",
 
         cost: 1e2,
@@ -401,7 +401,7 @@ const UPGRADES = {
         get base() { return Decimal.add(2, upgradeEffect("EM8",0)) },
 
         get desc() {
-            return `Increase exotic matter gain by <b>${formatMult(this.base)}</b> per level.`
+            return `Увеличивает добычу экзоктической материи в <b>${formatMult(this.base)}</b> за уровень.`
         },
         curr: "exotic",
 
@@ -418,7 +418,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade("EM2"),
 
-        desc: `Improve unnatural matter gain better.`,
+        desc: `Добыча нетрадиционной материи улучена.`,
         curr: "exotic",
 
         cost: 5e3,
@@ -427,9 +427,9 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade("EM3"),
 
-        desc: `<span style="font-size: 0.9em;">Passively generate <b>10%</b> of unnatural matter gained on matter annihilation at a rate affected by speed.
-        However, you still generate time for natural matter growth at the same rate.
-        Antimatter will no longer be growing, except for time.</span>`,
+        desc: `<span style="font-size: 0.9em;">Пасивная генерация <b>10%</b> нетрадиционной материи при устранении материи в порядке на который влияет скорость.
+        Однако, ты все ещё генерируешь традиционную материю в том же порядке.
+        Антиматерия теперь безвредна и оставлена чисто ради забавы.</span>`,
         curr: "exotic",
 
         cost: 1e6,
@@ -438,7 +438,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade("EM4"),
 
-        desc: `Automate <b>UM*</b> upgrades without spending currencies.`,
+        desc: `Автоматизация улучшений <b>UM*</b> без фактической траты валюты.`,
         curr: "exotic",
 
         cost: 1e7,
@@ -447,7 +447,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade("EM5"),
 
-        desc: `Exotic matter boosts are <b>squared</b>.`,
+        desc: `Усиления экзоктики теперь в <b>квадрате</b>.`,
         curr: "exotic",
 
         cost: 1e9,
@@ -458,7 +458,7 @@ const UPGRADES = {
         get base() { return 1 },
 
         get desc() {
-            return `Delay the overflow of matter generation in the second dark penalty by <b>${formatMult(this.base)}</b> OoM^3 per level.`
+            return `Отдаляет переизбыток генерации материи во втором Темной наказании на <b>${formatMult(this.base)}</b> десятка^3 за уровень.`
         },
         curr: "exotic",
 
@@ -479,7 +479,7 @@ const UPGRADES = {
 
         get desc() {
             let base = this.base
-            return `Increase the base of <b>EM2</b> by <b>+${format(base)}</b> per level.`
+            return `Рост базы для <b>EM2</b> на <b>+${format(base)}</b> за уровень.`
         },
         curr: "exotic",
 
@@ -497,7 +497,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>true,
 
-        desc: `Total unnatural matter provides an <b>exponential</b> boost to matter generation.`,
+        desc: `Вся нетрационная материя даёт <b>экспоненциальный</b> усиление по генерации материи.`,
         curr: "dark",
 
         cost: 1,
@@ -512,7 +512,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade("DM1"),
 
-        desc: `Improve <b>M6</b>'s effect even better.`,
+        desc: `Эффект <b>M6</b> теперь ещё лучше.`,
         curr: "dark",
 
         cost: 5,
@@ -523,7 +523,7 @@ const UPGRADES = {
         get base() { return Decimal.add(2, 0) },
 
         get desc() {
-            return `Increase dark matter gain by <b>${formatMult(this.base)}</b> on level.`
+            return `Добыча темной материи увеличено на <b>${formatMult(this.base)}</b> на уровне.`
         },
         curr: "dark",
 
@@ -540,7 +540,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade("DM3"),
 
-        desc: `The second boost of exotic matter now affects matter generation to the exponent. Exotic matter boosts are <b>squared</b> again.`,
+        desc: `Второе усиление экзоктической материи теперь влияет на рост материи по экспоненте. Усиления экзоктической материи снова в <b>квадрате</b>.`,
         curr: "dark",
 
         cost: 250,
@@ -549,9 +549,9 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade("DM4"),
 
-        desc: `<span style="font-size: 0.9em;">Passively generate <b>10%</b> of exotic matter gained on unnatural matter annihilation at a rate affected by speed.
-        Natural and corrupted matter will no longer be growing, except for time.
-        However, this upgrade causes dark penalty.</span>`,
+        desc: `<span style="font-size: 0.9em;">Пасивная генерация <b>10%</b> экзоматерии из устранения нетрадиционной материи в порядке влияющей на скорость.
+        Рост натуральной и испорченной материи больше не влияют и теперь чисто ради времени.
+        Покупка данного улучшения приведет к Темному наказанию.</span>`,
         curr: "dark",
 
         cost: 1e3,
@@ -564,7 +564,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade("DM5"),
 
-        desc: `Automate <b>EM*</b> upgrades without spending currencies.`,
+        desc: `Автоматизация улучшений <b>EM*</b> без фактической траты валюты.`,
         curr: "dark",
 
         cost: 1e4,
@@ -573,7 +573,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade("DM6"),
 
-        desc: `The <b>EM7</b>'s effect is <b>squared</b>.`,
+        desc: `Эффект <b>EM7</b> теперь в <b>квадрате</b>.`,
         curr: "dark",
 
         cost: 1e5,
@@ -582,7 +582,7 @@ const UPGRADES = {
         max: 54,
         unl: ()=>hasUpgrade("DM7"),
 
-        desc: `The tower of matter generation (10^^n) is boosted by <b>+1</b> per squared level.`,
+        desc: `Башня генерации материи (10^^n) усилена на <b>+1</b> за квадратный уровень.`,
         curr: "dark",
 
         cost: a => a.pow_base(9).mul(1e12),
@@ -598,9 +598,9 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade("DM8"),
 
-        get desc() { return `Enter the <b>Matterverse</b>, wiping away every matter and its features and replacing matter with <b>meta-matter</b>.
-            Matter and Annihilation tabs, and all previous upgrades and boosts are disabled.
-            Meta-matter is calculated depending on matter. You cannot be undone!` },
+        get desc() { return `Войди в <b>Материверс</b>, устраняя каждую материю с её возможностями, заменяя материю её старшим братом - <b>мета-материи</b>.
+            Вкладки Материи и Устранений вместе с прошлыми усилениями и улучшения будут отключены.
+            Мета-материи будет генерировать на основе материи. Обратной дороги из Материверса не будет, так что...` },
         curr: "dark",
 
         cost: 1e63,// 1e63,
@@ -632,7 +632,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>true,
 
-        desc: `Generate <b>0.1</b> meta-matter every second.`,
+        desc: `Генерирует <b>0.1</b> мета-материи каждую секунду. Дежавю?`,
         curr: "meta",
 
         cost: E(0),
@@ -643,7 +643,7 @@ const UPGRADES = {
 
         get base() { return Decimal.mul(0.1,upgradeEffect("MM3")) },
 
-        get desc() { return `Meta-matter adds to the base of meta-matter generation at <b>${formatPercent(this.base)}</b> rate.` },
+        get desc() { return `Мета-материя добавляет к базе генерации мета-материи в <b>${formatPercent(this.base)}</b> порядке.` },
         curr: "meta",
 
         cost: E(1),
@@ -656,7 +656,7 @@ const UPGRADES = {
 
         get desc() {
             let p = this.pow
-            return `Increase the base of <b>MM2</b> by <b>${formatMult(this.base)}</b> per level${p == 1 ? "" : `<sup>${format(p,3)}</sup>`}.`
+            return `Увеличивает базу для <b>MM2</b> на <b>${formatMult(this.base)}</b> за уровень${p == 1 ? "" : `<sup>${format(p,3)}</sup>`}.`
         },
         curr: "meta",
 
@@ -673,7 +673,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade('MM3'),
 
-        get desc() { return `Best meta-matter increases the exponent of <b>MM2</b>'s level to the effect at a reduced rate.` },
+        get desc() { return `Лучшая за все время мета-материя увеличивает экспоненту эффекта <b>MM2</b> в уменьшенном порядке.` },
         curr: "meta",
 
         cost: E('ee5'),
@@ -696,7 +696,7 @@ const UPGRADES = {
 
         get desc() {
             let p = this.pow
-            return `The <b>MM4</b>'s effect is <b>${formatMult(this.base)}</b> stronger per level${p == 1 ? "" : `<sup>${format(p,3)}</sup>`}.`
+            return `Эффект <b>MM4</b> теперь <b>${formatMult(this.base)}</b> сильнее за уровень.${p == 1 ? "" : `<sup>${format(p,3)}</sup>`}.`
         },
         curr: "meta",
 
@@ -717,7 +717,7 @@ const UPGRADES = {
 
         get desc() {
             let p = this.pow
-            return `Increase the tower height of meta-matter generation by <b>+${format(this.base)}</b> per level${p == 1 ? "" : `<sup>${format(p,3)}</sup>`}.`
+            return `Увеличивает высоту башни роста мета-материи на <b>+${format(this.base)}</b> за уровень${p == 1 ? "" : `<sup>${format(p,3)}</sup>`}.`
         },
         curr: "meta",
 
@@ -737,7 +737,7 @@ const UPGRADES = {
 
         get base() { return Decimal.mul(2,1) },
 
-        get desc() { return `Reset all previous, but increase the exponent of <b>MM2</b>'s level to its effect by <b>${formatMult(this.base)}</b> per level.` },
+        get desc() { return `Сбрось все в обмен на увеличение экспоненты эффекта <b>MM2</b> на <b>${formatMult(this.base)}</b> за уровень.` },
         curr: "meta",
 
         cost(a) { return Decimal.tetrate(Number.MAX_VALUE, a.add(1)) },
@@ -760,7 +760,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade('O1'),
 
-        desc: `Automate <b>MM*</b> upgrades without spending currencies.`,
+        desc: `Автоматизация улучшений <b>MM*</b> без фактической траты валюты.`,
         curr: "meta",
 
         cost: E('ee100'),
@@ -769,7 +769,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade('O2'),
 
-        desc: `The <b>O1</b> upgrade affects <b>MM4</b>'s strength.`,
+        desc: `Улучшение <b>O1</b> влияет на силу <b>MM4</b>.`,
         curr: "meta",
 
         cost: E('eee1000'),
@@ -778,7 +778,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade('O3'),
 
-        desc: `The <b>MM5</b> upgrade raises the <b>MM4</b>'s effect.`,
+        desc: `Улучшение <b>MM5</b> увеличивает эффект <b>MM4</b>.`,
         curr: "meta",
 
         cost: E('5 PT 3'),
@@ -787,7 +787,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade('O4'),
 
-        desc: `The <b>O1</b> upgrade also affects <b>MM5</b>'s exponent.`,
+        desc: `Улучшение <b>O1</b> также влияет на экспоненту <b>MM5</b>.`,
         curr: "meta",
 
         cost: E('6 TP 2'),
@@ -801,7 +801,7 @@ const UPGRADES = {
 
         get desc() {
             let p = this.pow
-            return `Increase the exponent of <b>MM2</b>'s level to its effect by <b>+${format(this.base)}</b> per level${p == 1 ? "" : `<sup>${format(p,3)}</sup>`}.`
+            return `Увеличивает экспоненту для эффекта <b>MM2</b> на <b>+${format(this.base)}</b> за уровень${p == 1 ? "" : `<sup>${format(p,3)}</sup>`}.`
         },
         curr: "meta",
 
@@ -823,7 +823,7 @@ const UPGRADES = {
 
         get desc() {
             let p = this.pow
-            return `Increase the base of <b>O6</b> by <b>+${format(this.base)}</b> per level${p == 1 ? "" : `<sup>${format(p,3)}</sup>`}.`
+            return `Увеличивает базу для <b>O6</b> на <b>+${format(this.base)}</b> за уровень${p == 1 ? "" : `<sup>${format(p,3)}</sup>`}.`
         },
         curr: "meta",
 
@@ -840,7 +840,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade('O7'),
 
-        desc: `The base of <b>MM6</b> is boosted by best meta-matter at a reduced rate.`,
+        desc: `База <b>MM6</b> усилено лучшей мета-материей в уменьшенном порядке`,
         curr: "meta",
 
         cost: E('1e140 TP 1'),
@@ -855,7 +855,7 @@ const UPGRADES = {
         max: 1,
         unl: ()=>hasUpgrade('O8'),
 
-        desc: `<b style="color : gold">Break everything up to omnipotence...</b>`,
+        desc: `<b style="color : gold">Разломать все до омниуровня...</b>`,
         curr: "meta",
 
         cost: E('1e308 TP 1'),
