@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matter Apocalypse</title>
+    <title>Материальный Апокалипсис</title>
 
     <link rel="stylesheet" href="style/main.css">
     <link id="theme_css" rel="stylesheet" href="">
@@ -34,7 +34,7 @@
     <div id="tooltip-div"></div>
     <div id="app" style="display: none;">
         <div style="min-height: 100px;">
-            <div>You have <h1 id="matter-amount">0</h1> <span id="matter-name">matter</span>. <span id="matter-gain">(+0/s)</span></div>
+            <div>У тебя есть <h1 id="matter-amount">0</h1> <span id="matter-name">материи</span>. <span id="matter-gain">(+0/сек)</span></div>
             <div class="small-text" id="antimatter-amount"></div>
         </div>
         <div class="main-line"></div>
@@ -44,39 +44,39 @@
             <div id="upgrades-M-table" class="upgrades-table"></div>
         </div><div id="unnatural-tab">
             <div>
-                You have <h3 id="unnatural-amount">0</h3> unnatural matter. <span id="unnatural-gain">(+0/annihilation)</span>
-                <div class="small-text"><i>When antimatter exceeds your matter, annihilating it, you earn unnatural matter based on your best matter.</i></div>
-                <div class="small-text">You have <h4 id="unnatural-total">0</h4> total unnatural matter, which translates to a <h4 id="unnatural-boost">???</h4> multiplier for matter generation.</div>
+                У тебя есть <h3 id="unnatural-amount">0</h3> нетрадиционной материи. <span id="unnatural-gain">(+0/устранение)</span>
+                <div class="small-text"><i>Когда антиматерия превысит твою материю, она устранится и ты получаешь нетрадиционную материю на основе максимума материи.</i></div>
+                <div class="small-text">У тебя всего <h4 id="unnatural-total">0</h4> нетрадиционной материи, что переводиться в <h4 id="unnatural-boost">???</h4> множитель для генерации материи.</div>
             </div>
             <div id="upgrades-UM-table" class="upgrades-table"></div>
             <div class="small-text" id="anti-unnaturalmatter-amount"></div>
         </div><div id="exotic-tab">
             <div>
-                You have <h3 id="exotic-amount">0</h3> exotic matter. <span id="exotic-gain">(+0/annihilation)</span>
-                <div class="small-text"><i>When natural matter exceeds your unnatural matter, annihilating it, you earn exotic matter based on your total unnatural matter.</i></div>
-                <div class="small-text">You have <h4 id="exotic-total">0</h4> total exotic matter, which translates to a <h4 id="exotic-boost1">???</h4> multiplier for all previous matter gains and a <h4 id="exotic-boost2">???</h4> multiplier for matter generation.</div>
+                У тебя есть <h3 id="exotic-amount">0</h3> экзоктической материи. <span id="exotic-gain">(+0/устранение)</span>
+                <div class="small-text"><i>Когда традиционная материя превышает твою нетрадиционную, она устранится и ты получаешь экзоктическую материю на основе всей нетрадиционной материи.</i></div>
+                <div class="small-text">У тебя всего <h4 id="exotic-total">0</h4> экзоктической материи, что переводиться в <h4 id="exotic-boost1">???</h4> множитель получения для всех прошлых материй и <h4 id="exotic-boost2">???</h4> множитель для генерации материи.</div>
             </div>
             <div id="upgrades-EM-table" class="upgrades-table"></div>
             <div class="small-text" id="anti-exoticmatter-amount"></div>
         </div><div id="dark-tab">
             <div>
-                You have <h3 id="dark-amount">0</h3> dark matter. <span id="dark-gain">(+0/annihilation)</span>
-                <div class="small-text"><i>When corrupted matter exceeds your exotic matter, annihilating it, you earn dark matter based on your total exotic matter.</i></div>
-                <div class="small-text">You have <h4 id="dark-total">0</h4> total dark matter, which translates to a <h4 id="dark-boost1">???</h4> multiplier for all previous matter gains and a <h4 id="dark-boost2">???</h4> multiplier for unnatural matter gain.</div>
+                У тебя есть <h3 id="dark-amount">0</h3> тёмной материи. <span id="dark-gain">(+0/устранение)</span>
+                <div class="small-text"><i>Когда испорченная материя станет больше твоей экзоктической, она устранится и ты получишь тёмную материю на основе всей экзоктической материи.</i></div>
+                <div class="small-text">У тебя всего <h4 id="dark-total">0</h4> тёмной материи, что переводиться в <h4 id="dark-boost1">???</h4> множитель получения для всех прошлых материй и <h4 id="dark-boost2">???</h4> множитель получения для нетрадиционной материи.</div>
             </div>
             <div id="dark-penalties"></div>
             <div id="upgrades-DM-table" class="upgrades-table"></div>
         </div>
 
         <div id="meta-tab">
-            <div class="small-text">Your best meta-matter produces <h4 id="meta-matter-production">???</h4>.</div>
+            <div class="small-text">Твоя лучшая мета-материя делает <h4 id="meta-matter-production">???</h4>.</div>
             <div id="upgrades-MM-table" class="upgrades-table"></div>
             <div id="upgrades-O-table" class="upgrades-table"></div>
         </div>
 
         <div id="auto-tab">
-            <div class="small-text"><i>Auto-upgrade options are unlocked when you bought upgrades for the first time.</i></div>
-            <h2>Auto-Upgrades</h2>
+            <div class="small-text"><i>Опция авто-улучшения открывает только после первой покупки улучшения.</i></div>
+            <h2>Авто-Улучшения</h2>
             <div id="auto-upgrades" class="table-center">
                 <!--
                 <div class="auto-div" id="auto-upgs-M-div">
@@ -89,34 +89,34 @@
             </div>
         </div>
         <div id="achs-tab">
-            <div class="small-text">You have <h4 id="ach-total">0</h4> total achievements, which translates to a <h4 id="ach-boost">???</h4> exponent for <b>M2</b>'s level to its effect.</div>
+            <div class="small-text">У тебя всего <h4 id="ach-total">0</h4> достижений, что дает <h4 id="ach-boost">???</h4> экспоненту для эффекта уровня улучшения <b>M2</b>.</div>
             <div id="achievements"></div>
         </div>
         <div id="options-tab">
-            <h2>Main Options</h2>
+            <h2>Главные настройки</h2>
             <div class="table-center">
-                <button class="big-btn" onclick="save()">Save</button>
-                <button class="big-btn" onclick="export_copy()">Export via clipboard</button>
-                <button class="big-btn" onclick="exporty()">Export via file</button>
-                <button class="big-btn" onclick="importy()">Import via prompt</button>
-                <button class="big-btn" onclick="importy_file()">Import via file</button>
-                <button class="big-btn" onclick="wipeConfirm()" style="color: red; font-weight: bold;">WIPE!!!</button>
+                <button class="big-btn" onclick="save()">Сохранить</button>
+                <button class="big-btn" onclick="export_copy()">Экспорт через буфер</button>
+                <button class="big-btn" onclick="exporty()">Экспорт через файл</button>
+                <button class="big-btn" onclick="importy()">Импорт через ввод</button>
+                <button class="big-btn" onclick="importy_file()">Импорт через файл</button>
+                <button class="big-btn" onclick="wipeConfirm()" style="color: red; font-weight: bold;">СТЕРЕТЬ ВСЕ!!!</button>
             </div>
-            <h2>Notations/Others</h2>
+            <h2>Записи числа/Прочее</h2>
             <div class="table-center" id="notations"></div>
             <br><br>
-            Matter Apocalypse - made by <a href="https://github.com/MrRedShark77">MrRedShark77</a> in <a href="https://itch.io/jam/sigj-2024">SIGJ 2024</a>
+            Материальный Апокалипсис (Matter Apocalypse) - сделал <a href="https://github.com/MrRedShark77">MrRedShark77</a> для <a href="https://itch.io/jam/sigj-2024">SIGJ 2024</a>
             <br><br>
             Credits:<br>
             <a href="https://github.com/Patashu/break_eternity.js/tree/master">break_eternity.js</a> by <a href="https://github.com/Patashu">Patashu</a><br>
         </div>
     </div><div id="the-end" style="display: none; opacity: 0;">
-        <h1><b>Matter Apocalypse</b></h1><br>
-        <h2>Thanks for playing!</h2><br>
-        <p>You beat the game in <b id="full-time"></b>!</p>
+        <h1><b>Материальный Апокалипсис</b></h1><br>
+        <h2>Спасибо за игру!</h2><br>
+        <p>Вы победили за <b id="full-time"></b>!</p>
         <div class="table-center">
-            <button class="big-btn" onclick="wipeConfirm()">Play Again</button>
-            <button class="big-btn" onclick="el('the-end').style.display = 'none'; el('app').style.display = ''">Keep Going</button>
+            <button class="big-btn" onclick="wipeConfirm()">Еще раз!</button>
+            <button class="big-btn" onclick="el('the-end').style.display = 'none'; el('app').style.display = ''">Продолжим!</button>
         </div>
     </div>
 
