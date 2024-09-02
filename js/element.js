@@ -19,28 +19,28 @@ function updateTheme() {
 const NOTATIONS_OPTIONS = [
     {
         get html() {
-            return "Formatting Notation: " + ["Scientific", "Standard", "Mixed Scientific", "Logarithm"][player.options.notation]
+            return "Формат записи чисел: " + ["Научный", "Стандартный", "Смешено Научный", "Логарифмический"][player.options.notation]
         },
         click() {
             player.options.notation = (player.options.notation + 1) % 4
         },
     },{
         get html() {
-            return "OoMs of Number Commas: " + [3,6,9,12,15][player.options.comma]
+            return "Максимум кол-во чисел в научном формате (после e): " + [3,6,9,12,15][player.options.comma]
         },
         click() {
             player.options.comma = (player.options.comma + 1) % 5
         },
     },{
         get html() {
-            return "Starting Number of Mixed Scientific: " + ["e33", "e63", "e303", "e3003"][player.options.mixed_sc]
+            return "Начальное число для Смешанного научного: " + ["e33", "e63", "e303", "e3003"][player.options.mixed_sc]
         },
         click() {
             player.options.mixed_sc = (player.options.mixed_sc + 1) % 4
         },
     },{
         get html() {
-            return "Theme: " + ["Normal (Light)", "Dark"][player.options.theme]
+            return "Тема: " + ["Обычная (Светлая)", "Темная"][player.options.theme]
         },
         click() {
             player.options.theme = (player.options.theme + 1) % 2
